@@ -27,7 +27,7 @@ export class Board {
         const markedTiles = this.tiles.filter(tile => tile.marked);
         if (markedTiles.length === 3) {
             if (markedTiles.every(tile => tile.color === markedTiles[0].color)) {
-                alert('You won!');
+                // alert('You won!');
                 this._eventAggregator.publish('renew-tiles', markedTiles);
             } else {
                 markedTiles.forEach(tile => tile.marked = false);

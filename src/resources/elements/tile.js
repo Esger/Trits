@@ -16,8 +16,6 @@ export class Tile {
 
     attached() {
         this._randomizeTreats();
-        this.tileObj.marked = false;
-        this.tileObj.visible = true;
         this._renewSubscription = this._eventAggregator.subscribe('renew-tiles', tiles => {
             const renewTile = tiles.some(tile => tile.id === this.tileObj.id);
             if (renewTile)
@@ -39,6 +37,8 @@ export class Tile {
         for (let treat of treats) {
             this.tileObj[treat] = this._randomProperty(this.treats[treat]);
         }
+        this.tileObj.marked = false;
+        this.tileObj.visible = true;
     }
 
     _randomProperty(properties) {
@@ -46,14 +46,10 @@ export class Tile {
     }
 
     _renew() {
-        let timeOut = 500;
+        const timeOut = Math.random() * 500 + 500;
         setTimeout(_ => {
             this.tileObj.visible = false;
-            setTimeout(_ => {
-                this._randomizeTreats();
-                this.tileObj.marked = false;
-                this.tileObj.visible = true;
-            }, timeOut);
+            setTimeout(_ => this._randomizeTreats(), 500);
         }, timeOut);
     }
 }

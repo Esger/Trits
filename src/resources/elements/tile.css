@@ -9,7 +9,7 @@ tile {
 
     &:hover,
     &.marked {
-        outline       : 3px dotted aqua;
+        outline       : 3px dotted crimson;
         outline-offset: 3px;
     }
 
