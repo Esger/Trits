@@ -13,6 +13,7 @@ export class Board {
         this.tiles = [];
         for (let i = 0; i < this.tileCount; i++)
             this.tiles.push({ id: i });
+        this.score = 0;
     }
 
     attached() {
@@ -23,11 +24,27 @@ export class Board {
         this._clickSubscription.dispose();
     }
 
+    _evaluate(tiles) {
+        const treats = Object.keys(tiles[0].treats);
+        const treatSets = {};
+        treats.forEach(treat => treatSets[treat] = new Set(tiles.map(tile => tile[treat])));
+
+        const inclusiveResults = treats.map(treat => treatSets[treat].size === 1);
+        const exclusiveResults = treats.map(treat => treatSets[treat].size === treats.length);
+        const results = inclusiveResults.concat(exclusiveResults);
+        const score = results.filter(result => result).length;
+
+        console.log(score);
+        return score;
+    }
+
     _checkWin() {
         const markedTiles = this.tiles.filter(tile => tile.marked);
         if (markedTiles.length === 3) {
-            if (markedTiles.every(tile => tile.color === markedTiles[0].color)) {
-                // alert('You won!');
+            const result = this._evaluate(markedTiles);
+            if (result) {
+                this.score += result;
+                // alert('Continue?');
                 this._eventAggregator.publish('renew-tiles', markedTiles);
             } else {
                 markedTiles.forEach(tile => tile.marked = false);

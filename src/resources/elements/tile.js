@@ -8,13 +8,14 @@ export class Tile {
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
         this.treats = {
-            textTranform: ['capitalize', 'uppercase', 'lowercase'],
+            textTransform: ['capitalize', 'uppercase', 'lowercase'],
             color: ['crimson', 'olive', 'navy'],
             background: ['lightgoldenrodyellow', 'wheat', 'lightblue']
         }
     }
 
     attached() {
+        this.tileObj.treats = this.treats;
         this._randomizeTreats();
         this._renewSubscription = this._eventAggregator.subscribe('renew-tiles', tiles => {
             const renewTile = tiles.some(tile => tile.id === this.tileObj.id);
