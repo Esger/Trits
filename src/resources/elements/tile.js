@@ -12,8 +12,8 @@ export class Tile {
             textTransform: ['capitalize', 'uppercase', 'lowercase'],
             color: ['crimson', 'olive', 'navy'],
             background: ['lightgoldenrodyellow', 'wheat', 'lightblue'],
-            borderRadius: ['0 0 0 0', '0 0 50% 50%', '0 50% 0 50%', '0 50% 50% 0', '50% 0 0 50%', '50% 0 50% 0', '50% 50% 0 0', '50% 50% 50% 50% ']
-            // borderRadius: ['0 0 0 0', '0 0 0 50%', '0 0 50% 0', '0 0 50% 50%', '0 50% 0 0', '0 50% 0 50%', '0 50% 50% 0', '0 50% 50% 50%', '50% 0 0 0', '50% 0 0 50%', '50% 0 50% 0', '50% 0 50% 50%', '50% 50% 0 0', '50% 50% 0 50%', '50% 50% 50% 0', '50% 50% 50% 50% ']
+            borderRadiusEven: ['0 0 0 0', '0 0 9in 9in', '0 9in 0 9in', '0 9in 9in 0', '9in 0 0 9in', '9in 0 9in 0', '9in 9in 0 0', '9in 9in 9in 9in '],
+            borderRadiusAll: ['0 0 0 0', '0 0 0 9in', '0 0 9in 0', '0 0 9in 9in', '0 9in 0 0', '0 9in 0 9in', '0 9in 9in 0', '0 9in 9in 9in', '9in 0 0 0', '9in 0 0 9in', '9in 0 9in 0', '9in 0 9in 9in', '9in 9in 0 0', '9in 9in 0 9in', '9in 9in 9in 0', '9in 9in 9in 9in ']
         }
     }
 
