@@ -7,10 +7,13 @@ export class Tile {
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
+
         this.treats = {
             textTransform: ['capitalize', 'uppercase', 'lowercase'],
             color: ['crimson', 'olive', 'navy'],
-            background: ['lightgoldenrodyellow', 'wheat', 'lightblue']
+            background: ['lightgoldenrodyellow', 'wheat', 'lightblue'],
+            borderRadius: ['0 0 0 0', '0 0 50% 50%', '0 50% 0 50%', '0 50% 50% 0', '50% 0 0 50%', '50% 0 50% 0', '50% 50% 0 0', '50% 50% 50% 50% ']
+            // borderRadius: ['0 0 0 0', '0 0 0 50%', '0 0 50% 0', '0 0 50% 50%', '0 50% 0 0', '0 50% 0 50%', '0 50% 50% 0', '0 50% 50% 50%', '50% 0 0 0', '50% 0 0 50%', '50% 0 50% 0', '50% 0 50% 50%', '50% 50% 0 0', '50% 50% 0 50%', '50% 50% 50% 0', '50% 50% 50% 50% ']
         }
     }
 
