@@ -7,9 +7,14 @@ tile {
     color           : var(--color);
     text-transform  : var(--textTransform);
 
-    &:hover {
+    &:hover,
+    &.marked {
         outline       : 3px dotted aqua;
         outline-offset: 3px;
+    }
+
+    &.hidden {
+        opacity: 0;
     }
 
     h2 {

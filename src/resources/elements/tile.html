@@ -1,6 +1,9 @@
 <template style="--textTransform: ${value.textTransform};
                 --background: ${value.background};
-                --color: ${value.color}">
+                --color: ${value.color}"
+          class="${value.marked ? 'marked' : ''}
+                ${value.visible === false ? 'hidden' : ''}"
+          click.delegate="clicked()">
     <require from="./tile.css"></require>
 
     <h2 class="">tile-<slot>${$index}</slot>
