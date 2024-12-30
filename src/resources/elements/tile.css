@@ -1,0 +1,26 @@
+.capitals {
+    text-transform: var(--textTransform);
+}
+
+tile {
+    background-color: var(--background);
+    color           : var(--color);
+    text-transform  : var(--textTransform);
+
+    &:hover,
+    &.marked {
+        outline       : 3px dotted crimson;
+        outline-offset: 3px;
+    }
+
+    &.hidden {
+        opacity: 0;
+    }
+
+    h2 {
+        color         : inherit;
+        text-align    : center;
+        text-transform: inherit;
+        line-height   : 5rem;
+    }
+}

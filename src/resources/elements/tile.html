@@ -1,0 +1,12 @@
+<template style="--textTransform: ${tileObj.textTransform};
+                --background: ${tileObj.background};
+                --color: ${tileObj.color}"
+          class="${tileObj.marked ? 'marked' : ''}
+                ${tileObj.visible === false ? 'hidden' : ''}"
+          click.delegate="clicked()">
+    <require from="./tile.css"></require>
+
+    <h2 class="">tile-<slot>${$index}</slot>
+    </h2>
+
+</template>
