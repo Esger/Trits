@@ -1,8 +1,8 @@
-<template style="--textTransform: ${value.textTransform};
-                --background: ${value.background};
-                --color: ${value.color}"
-          class="${value.marked ? 'marked' : ''}
-                ${value.visible === false ? 'hidden' : ''}"
+<template style="--textTransform: ${tileObj.textTransform};
+                --background: ${tileObj.background};
+                --color: ${tileObj.color}"
+          class="${tileObj.marked ? 'marked' : ''}
+                ${tileObj.visible === false ? 'hidden' : ''}"
           click.delegate="clicked()">
     <require from="./tile.css"></require>
 
