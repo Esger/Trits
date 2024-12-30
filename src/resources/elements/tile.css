@@ -5,10 +5,17 @@
 tile {
     background-color: var(--background);
     color           : var(--color);
+    text-transform  : var(--textTransform);
+
+    &:hover {
+        outline       : 3px dotted aqua;
+        outline-offset: 3px;
+    }
 
     h2 {
-        color     : inherit;
-        text-align: center;
-
+        color         : inherit;
+        text-align    : center;
+        text-transform: inherit;
+        line-height   : 5rem;
     }
 }
