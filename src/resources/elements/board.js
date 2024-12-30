@@ -48,6 +48,7 @@ export class Board {
                 this._eventAggregator.publish('renew-tiles', markedTiles);
             } else {
                 markedTiles.forEach(tile => tile.marked = false);
+                document.querySelector('tile').triggerEvent('blur');
             }
         }
     }

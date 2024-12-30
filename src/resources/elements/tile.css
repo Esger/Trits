@@ -7,10 +7,16 @@ tile {
     color           : var(--color);
     text-transform  : var(--textTransform);
 
-    &:hover,
     &.marked {
         outline       : 3px dotted crimson;
         outline-offset: 3px;
+    }
+
+    @media (hover: hover) {
+        &:hover {
+            outline       : 3px dotted crimson;
+            outline-offset: 3px;
+        }
     }
 
     &.hidden {
