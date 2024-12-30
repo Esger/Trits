@@ -1,7 +1,9 @@
-<template>
+<template style="--textTransform: ${value.textTransform};
+                --background: ${value.background};
+                --color: ${value.color}">
     <require from="./tile.css"></require>
-    <h1 class="${value.capitals ? 'capitals' : ''}"
-        style="--background: ${value.background}px;
-		  		--color: ${value.color}">tile-<slot>${$index}</slot>
-    </h1>
+
+    <h2 class="">tile-<slot>${$index}</slot>
+    </h2>
+
 </template>

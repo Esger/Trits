@@ -1,6 +1,7 @@
-<template>
-    <h1>Board</h1>
+<template style="--width: ${WIDTH};
+    --height: ${HEIGHT};">
     <require from="elements/tile"></require>
+    <require from="./board.css"></require>
 
     <tile repeat.for="tile of tiles"
           value.bind="tile">${$index}</tile>
