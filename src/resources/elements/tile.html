@@ -1,0 +1,7 @@
+<template>
+    <require from="./tile.css"></require>
+    <h1 class="${value.capitals ? 'capitals' : ''}"
+        style="--background: ${value.background}px;
+		  		--color: ${value.color}">tile-<slot>${$index}</slot>
+    </h1>
+</template>

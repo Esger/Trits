@@ -1,0 +1,5 @@
+.capitals {
+    text-transform: uppercase;
+    color         : var(--color);
+    background    : var(--background);
+}
