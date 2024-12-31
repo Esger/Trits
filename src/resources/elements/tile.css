@@ -1,0 +1,46 @@
+.capitals {
+    text-transform: var(--textTransform);
+}
+
+
+tile {
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    background-color: color-mix(in srgb, var(--background) 20%, white);
+    color           : var(--color);
+    text-transform  : var(--textTransform);
+    border-radius   : var(--borderRadius);
+    border          : solid;
+    border-width    : var(--borderWidth);
+
+    &.marked {
+        outline       : 3px dotted crimson;
+        outline-offset: 3px;
+    }
+
+    @media (hover: hover) {
+        &:hover {
+            outline       : 3px dotted crimson;
+            outline-offset: 3px;
+        }
+    }
+
+    &.hidden {
+        opacity: 0;
+    }
+
+    h2 {
+        color         : inherit;
+        text-align    : center;
+        text-transform: inherit;
+        line-height   : 5rem;
+    }
+
+    @media screen and (max-width: 400px) {
+        h2 {
+            line-height: 3rem;
+            font-size  : 1rem;
+        }
+    }
+}

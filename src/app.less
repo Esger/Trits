@@ -1,7 +1,21 @@
-h1 {
-	color: green;
+:root {
+    --color: crimson;
+}
 
-	span {
-		color: crimson;
-	}
+html {
+    background-color: #fff;
+}
+
+body {
+    font-family: monospace;
+}
+
+@media screen and (min-width: 400px) {
+    body {
+        margin: 2rem 4rem;
+    }
+}
+
+h1 {
+    color: var(--color);
 }
