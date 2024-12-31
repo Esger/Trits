@@ -7,11 +7,11 @@ export class Tile {
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
-        const colors = ['crimson', 'olive', 'navy', 'cornflowerblue', 'orange', 'purple', 'darkgoldenrod'];
+        const colors = ['crimson', 'olive', 'navy', 'cornflowerblue', 'orange', 'purple', 'darkgoldenrod', 'yellowgreen'];
 
         this.treats = {
             text: colors,
-            textTransform: ['capitalize', 'uppercase', 'lowercase'],
+            // textTransform: ['capitalize', 'uppercase', 'lowercase'],
             color: colors,
             background: colors,
             // background: ['lightgoldenrodyellow', 'wheat', 'lightblue', 'lightcyan', 'lightgreen'],
