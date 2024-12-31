@@ -9,11 +9,14 @@ export class Tile {
         this._eventAggregator = eventAggregator;
 
         this.treats = {
+            text: ['red', 'green', 'blue', 'yellow', 'orange', 'purple'],
             textTransform: ['capitalize', 'uppercase', 'lowercase'],
             color: ['crimson', 'olive', 'navy'],
-            background: ['lightgoldenrodyellow', 'wheat', 'lightblue'],
+            background: ['lightgoldenrodyellow', 'wheat', 'lightblue', 'lightcyan', 'lightgreen'],
             borderRadiusEven: ['0 0 0 0', '0 0 9in 9in', '0 9in 0 9in', '0 9in 9in 0', '9in 0 0 9in', '9in 0 9in 0', '9in 9in 0 0', '9in 9in 9in 9in '],
-            borderRadiusAll: ['0 0 0 0', '0 0 0 9in', '0 0 9in 0', '0 0 9in 9in', '0 9in 0 0', '0 9in 0 9in', '0 9in 9in 0', '0 9in 9in 9in', '9in 0 0 0', '9in 0 0 9in', '9in 0 9in 0', '9in 0 9in 9in', '9in 9in 0 0', '9in 9in 0 9in', '9in 9in 9in 0', '9in 9in 9in 9in ']
+            borderRadiusAll: ['0 0 0 0', '0 0 0 9in', '0 0 9in 0', '0 0 9in 9in', '0 9in 0 0', '0 9in 0 9in', '0 9in 9in 0', '0 9in 9in 9in', '9in 0 0 0', '9in 0 0 9in', '9in 0 9in 0', '9in 0 9in 9in', '9in 9in 0 0', '9in 9in 0 9in', '9in 9in 9in 0', '9in'],
+            borderWidthEven: ['0 0 0 0', '0 0 .5rem .5rem', '0 .5rem 0 .5rem', '0 .5rem .5rem 0', '.5rem 0 0 .5rem', '.5rem 0 .5rem 0', '.5rem .5rem 0 0', '.5rem',],
+            borderWidthAll: ['0 0 0 0', '1px 0 0 0', '0 1px 0 0', '0 0 1px 0', '0 0 0 1px', '1px 0 1px 0', '0 1px 1px 0', '1px 1px 1px 0', '1px 1px 0 0', '1px 0 1px 1px', '0 1px 1px 1px', '1px 1px 1px 1px'],
         }
     }
 
