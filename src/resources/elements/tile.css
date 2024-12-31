@@ -3,6 +3,9 @@
 }
 
 tile {
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
     background-color: var(--background);
     color           : var(--color);
     text-transform  : var(--textTransform);

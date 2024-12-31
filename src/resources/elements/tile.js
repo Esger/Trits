@@ -9,9 +9,9 @@ export class Tile {
         this._eventAggregator = eventAggregator;
 
         this.treats = {
-            text: ['red', 'green', 'blue', 'yellow', 'orange', 'purple'],
+            text: ['crimson', 'olive', 'navy', 'cornflowerblue', 'orange', 'purple'],
             textTransform: ['capitalize', 'uppercase', 'lowercase'],
-            color: ['crimson', 'olive', 'navy'],
+            color: ['crimson', 'olive', 'navy', 'cornflowerblue', 'orange', 'purple'],
             background: ['lightgoldenrodyellow', 'wheat', 'lightblue', 'lightcyan', 'lightgreen'],
             borderRadiusEven: ['0 0 0 0', '0 0 9in 9in', '0 9in 0 9in', '0 9in 9in 0', '9in 0 0 9in', '9in 0 9in 0', '9in 9in 0 0', '9in 9in 9in 9in '],
             borderRadiusAll: ['0 0 0 0', '0 0 0 9in', '0 0 9in 0', '0 0 9in 9in', '0 9in 0 0', '0 9in 0 9in', '0 9in 9in 0', '0 9in 9in 9in', '9in 0 0 0', '9in 0 0 9in', '9in 0 9in 0', '9in 0 9in 9in', '9in 9in 0 0', '9in 9in 0 9in', '9in 9in 9in 0', '9in'],
