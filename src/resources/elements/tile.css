@@ -2,11 +2,12 @@
     text-transform: var(--textTransform);
 }
 
+
 tile {
     display         : flex;
     justify-content : center;
     align-items     : center;
-    background-color: var(--background);
+    background-color: color-mix(in srgb, var(--background) 20%, white);
     color           : var(--color);
     text-transform  : var(--textTransform);
     border-radius   : var(--borderRadius);
