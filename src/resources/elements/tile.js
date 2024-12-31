@@ -7,12 +7,14 @@ export class Tile {
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
+        const colors = ['crimson', 'olive', 'navy', 'cornflowerblue', 'orange', 'purple', 'darkgoldenrod'];
 
         this.treats = {
-            text: ['red', 'green', 'blue', 'yellow', 'orange', 'purple'],
+            text: colors,
             textTransform: ['capitalize', 'uppercase', 'lowercase'],
-            color: ['crimson', 'olive', 'navy'],
-            background: ['lightgoldenrodyellow', 'wheat', 'lightblue', 'lightcyan', 'lightgreen'],
+            color: colors,
+            background: colors,
+            // background: ['lightgoldenrodyellow', 'wheat', 'lightblue', 'lightcyan', 'lightgreen'],
             borderRadiusEven: ['0 0 0 0', '0 0 9in 9in', '0 9in 0 9in', '0 9in 9in 0', '9in 0 0 9in', '9in 0 9in 0', '9in 9in 0 0', '9in 9in 9in 9in '],
             borderRadiusAll: ['0 0 0 0', '0 0 0 9in', '0 0 9in 0', '0 0 9in 9in', '0 9in 0 0', '0 9in 0 9in', '0 9in 9in 0', '0 9in 9in 9in', '9in 0 0 0', '9in 0 0 9in', '9in 0 9in 0', '9in 0 9in 9in', '9in 9in 0 0', '9in 9in 0 9in', '9in 9in 9in 0', '9in'],
             borderWidthEven: ['0 0 0 0', '0 0 .5rem .5rem', '0 .5rem 0 .5rem', '0 .5rem .5rem 0', '.5rem 0 0 .5rem', '.5rem 0 .5rem 0', '.5rem .5rem 0 0', '.5rem',],
