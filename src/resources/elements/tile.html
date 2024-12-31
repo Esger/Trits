@@ -1,12 +1,13 @@
 <template style="--textTransform: ${tileObj.textTransform};
                 --background: ${tileObj.background};
-                --color: ${tileObj.color}"
+                --color: ${tileObj.color};
+                --borderRadius: ${tileObj.borderRadiusEven};
+                --borderWidth: ${tileObj.borderWidthEven};"
           class="${tileObj.marked ? 'marked' : ''}
-                ${tileObj.visible === false ? 'hidden' : ''}"
+    ${tileObj.visible === false ? 'hidden' : ''}"
           click.delegate="clicked()">
     <require from="./tile.css"></require>
 
-    <h2 class="">tile-<slot>${$index}</slot>
-    </h2>
+    <h2 class="">${tileObj.text}</h2>
 
 </template>

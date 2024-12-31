@@ -4,8 +4,8 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 @inject(EventAggregator)
 export class Board {
     @bindable value;
-    WIDTH = 4;
-    HEIGHT = 5;
+    WIDTH = 3;
+    HEIGHT = 4;
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
