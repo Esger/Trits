@@ -29,12 +29,12 @@ export class Board {
         const treatSets = {};
         treats.forEach(treat => treatSets[treat] = new Set(tiles.map(tile => tile[treat])));
 
-        const inclusiveResults = treats.map(treat => treatSets[treat].size === 1);
-        const exclusiveResults = treats.map(treat => treatSets[treat].size === treats.length);
-        const results = inclusiveResults.concat(exclusiveResults);
-        const score = results.filter(result => result).length;
+        const inclusiveResults = treats.map(treat => treatSets[treat].size === 1).filter(result => result).length;
+        const exclusiveResults = treats.map(treat => treatSets[treat].size === 3).filter(result => result).length;
+        const results = inclusiveResults + exclusiveResults;
+        const score = results === 4;
 
-        console.log(score);
+        console.log(results, score);
         return score;
     }
 
