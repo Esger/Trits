@@ -9,6 +9,7 @@ export class Tile {
         this._eventAggregator = eventAggregator;
         const allColors = ['crimson', 'olive', 'navy', 'cornflowerblue', 'orange', 'purple', 'darkgoldenrod', 'yellowgreen'];
         const colors = ['crimson', 'olive', 'cornflowerblue'];
+        const colorNames = ['crimson', 'olive', 'cornflower&shy;blue'];
 
         this.allTreats = {
             text: colors,
@@ -21,7 +22,7 @@ export class Tile {
         }
 
         this.treats = {
-            text: colors,
+            text: colorNames,
             color: colors,
             background: colors,
             borderRadiusEven: ['0 9in 9in 0', '9in 0 0 9in', '9in 9in 0 0'],
