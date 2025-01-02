@@ -19,16 +19,17 @@ export class Board {
         this._hintSubscription = this._eventAggregator.subscribe('hint', _ => {
             const combination = this._findWin();
             if (combination) {
+                this.tiles.forEach(tile => tile.marked = false);
                 combination.forEach(tile => tile.marked = true);
                 this.score -= 2;
-                setTimeout(_ => combination.forEach(tile => tile.marked = false), 1000);
+                setTimeout(_ => combination.forEach(tile => tile.marked = false), 1500);
             } else {
                 this.tiles.forEach(tile => tile.marked = true);
-                setTimeout(_ => this.tiles.forEach(tile => tile.marked = false), 1000);
+                setTimeout(_ => this.tiles.forEach(tile => tile.marked = false), 1500);
                 setTimeout(_ => {
                     this._newTiles();
                     this.score += 10;
-                }, 1100);
+                }, 1600);
             }
         });
     }
