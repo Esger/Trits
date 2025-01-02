@@ -22,6 +22,8 @@ tile {
     }
 
     @media (hover: hover) {
+        cursor: pointer;
+
         &:hover {
             outline       : 3px dotted crimson;
             outline-offset: 3px;
