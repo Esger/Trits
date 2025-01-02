@@ -34,11 +34,15 @@ export class Board {
         });
     }
 
-    _newTiles() {
+    _newTiles(attempts = 1) {
         this.tiles = [];
         for (let i = 0; i < this.tileCount; i++)
             this.tiles.push({ id: i });
-
+        setTimeout(_ => {
+            const combination = this._findWin();
+            if (!combination)
+                this._newTiles(attempts + 1);
+        });
     }
 
     detached() {
@@ -56,7 +60,6 @@ export class Board {
         const results = inclusiveResults + exclusiveResults;
         const correct = results === 4;
 
-        console.log(results, correct);
         return correct;
     }
 
