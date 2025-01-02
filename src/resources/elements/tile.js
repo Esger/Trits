@@ -7,9 +7,11 @@ export class Tile {
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
-        const colors = ['crimson', 'olive', 'navy', 'cornflowerblue', 'orange', 'purple', 'darkgoldenrod', 'yellowgreen'];
+        const allColors = ['crimson', 'olive', 'navy', 'cornflowerblue', 'orange', 'purple', 'darkgoldenrod', 'yellowgreen'];
+        const colors = ['crimson', 'olive', 'cornflowerblue'];
+        const colorNames = ['crimson', 'olive', 'cornflower&shy;blue'];
 
-        this.treats = {
+        this.allTreats = {
             text: colors,
             color: colors,
             background: colors,
@@ -17,6 +19,13 @@ export class Tile {
             borderRadiusAll: ['0 0 0 0', '0 0 0 9in', '0 0 9in 0', '0 0 9in 9in', '0 9in 0 0', '0 9in 0 9in', '0 9in 9in 0', '0 9in 9in 9in', '9in 0 0 0', '9in 0 0 9in', '9in 0 9in 0', '9in 0 9in 9in', '9in 9in 0 0', '9in 9in 0 9in', '9in 9in 9in 0', '9in'],
             borderWidthEven: ['0 0 0 0', '0 0 .5rem .5rem', '0 .5rem 0 .5rem', '0 .5rem .5rem 0', '.5rem 0 0 .5rem', '.5rem 0 .5rem 0', '.5rem .5rem 0 0', '.5rem',],
             borderWidthAll: ['0 0 0 0', '1px 0 0 0', '0 1px 0 0', '0 0 1px 0', '0 0 0 1px', '1px 0 1px 0', '0 1px 1px 0', '1px 1px 1px 0', '1px 1px 0 0', '1px 0 1px 1px', '0 1px 1px 1px', '1px 1px 1px 1px'],
+        }
+
+        this.treats = {
+            text: colorNames,
+            color: colors,
+            background: colors,
+            borderRadiusEven: ['0 9in 9in 0', '9in 0 0 9in', '9in 9in 0 0'],
         }
     }
 

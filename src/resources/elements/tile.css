@@ -10,9 +10,11 @@ tile {
     background-color: color-mix(in srgb, var(--background) 20%, white);
     color           : var(--color);
     text-transform  : var(--textTransform);
-    border-radius   : var(--borderRadius);
+    border-radius   : var(--borderRadius, 9in);
     border          : solid;
-    border-width    : var(--borderWidth);
+    border-width    : var(--borderWidth, 0);
+    padding         : .5rem;
+    height          : 5rem;
 
     &.marked {
         outline       : 3px dotted crimson;
@@ -34,13 +36,12 @@ tile {
         color         : inherit;
         text-align    : center;
         text-transform: inherit;
-        line-height   : 5rem;
+        line-height   : 1.1rem;
     }
 
     @media screen and (max-width: 400px) {
         h2 {
-            line-height: 3rem;
-            font-size  : 1rem;
+            font-size: 1rem;
         }
     }
 }
