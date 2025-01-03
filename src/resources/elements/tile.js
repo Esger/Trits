@@ -7,40 +7,25 @@ export class Tile {
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
-        const allColors = ['crimson', 'olive', 'navy', 'cornflowerblue', 'orange', 'purple', 'darkgoldenrod', 'yellowgreen'];
         const colors = ['crimson', 'olive', 'cornflowerblue'];
         const colorNames = ['crimson', 'olive', 'cornflower&shy;blue'];
 
-        this.allTreats = {
-            text: colors,
-            color: colors,
-            background: colors,
-            borderRadiusEven: ['0 0 0 0', '0 0 9in 9in', '0 9in 0 9in', '0 9in 9in 0', '9in 0 0 9in', '9in 0 9in 0', '9in 9in 0 0', '9in 9in 9in 9in '],
-            borderRadiusAll: ['0 0 0 0', '0 0 0 9in', '0 0 9in 0', '0 0 9in 9in', '0 9in 0 0', '0 9in 0 9in', '0 9in 9in 0', '0 9in 9in 9in', '9in 0 0 0', '9in 0 0 9in', '9in 0 9in 0', '9in 0 9in 9in', '9in 9in 0 0', '9in 9in 0 9in', '9in 9in 9in 0', '9in'],
-            borderWidthEven: ['0 0 0 0', '0 0 .5rem .5rem', '0 .5rem 0 .5rem', '0 .5rem .5rem 0', '.5rem 0 0 .5rem', '.5rem 0 .5rem 0', '.5rem .5rem 0 0', '.5rem',],
-            borderWidthAll: ['0 0 0 0', '1px 0 0 0', '0 1px 0 0', '0 0 1px 0', '0 0 0 1px', '1px 0 1px 0', '0 1px 1px 0', '1px 1px 1px 0', '1px 1px 0 0', '1px 0 1px 1px', '0 1px 1px 1px', '1px 1px 1px 1px'],
-        }
-
-        this.treats = {
+        this.allTreats = [{
             text: colorNames,
             color: colors,
             background: colors,
             borderRadiusEven: ['0 9in 9in 0', '9in 0 0 9in', '9in 9in 0 0'],
-        }
+        }];
+
+        this.treats = this.allTreats[0];
     }
 
     attached() {
         this.tileObj.treats = this.treats;
+        this.tileObj.visible = false;
         this._randomizeTreats();
-        this._renewSubscription = this._eventAggregator.subscribe('renew-tiles', tiles => {
-            const renewTile = tiles.some(tile => tile.id === this.tileObj.id);
-            if (renewTile)
-                this._renew()
-        });
-    }
-
-    detached() {
-        this._renewSubscription.dispose();
+        this.tileObj.visible = true;
+        this._eventAggregator.publish('tile-ready');
     }
 
     clicked() {
@@ -61,11 +46,4 @@ export class Tile {
         return properties[Math.floor(Math.random() * properties.length)]
     }
 
-    _renew() {
-        const timeOut = Math.random() * 500 + 500;
-        setTimeout(_ => {
-            this.tileObj.visible = false;
-            setTimeout(_ => this._randomizeTreats(), 500);
-        }, timeOut);
-    }
 }

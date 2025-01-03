@@ -12,81 +12,102 @@ export class Board {
         this.tileCount = this.WIDTH * this.HEIGHT;
         this.score = 0;
         this._newTiles();
+        this.allCorrectCombinations = [];
     }
 
     attached() {
         this._clickSubscription = this._eventAggregator.subscribe('tile-clicked', _ => this._checkWin());
         this._hintSubscription = this._eventAggregator.subscribe('hint', _ => {
-            const combination = this._findWin();
+            const combination = this._findCorrectCombinations();
             if (combination) {
                 this.tiles.forEach(tile => tile.marked = false);
                 combination.forEach(tile => tile.marked = true);
                 this.score -= 2;
                 setTimeout(_ => combination.forEach(tile => tile.marked = false), 1500);
             } else {
-                this.tiles.forEach(tile => tile.marked = true);
-                setTimeout(_ => this.tiles.forEach(tile => tile.marked = false), 1500);
+                // this should never happen
+                this._highlightTiles(this.tiles);
                 setTimeout(_ => {
                     this._newTiles();
                     this.score += 10;
                 }, 1600);
             }
         });
-    }
-
-    _newTiles(attempts = 1) {
-        this.tiles = [];
-        for (let i = 0; i < this.tileCount; i++)
-            this.tiles.push({ id: i });
-        setTimeout(_ => {
-            const combination = this._findWin();
-            if (!combination)
-                this._newTiles(attempts + 1);
+        this._readySubscription = this._eventAggregator.subscribe('tile-ready', _ => {
+            clearTimeout(this._readyTimeout);
+            this._readyTimeout = setTimeout(_ => {
+                const combination = this._findCorrectCombinations();
+                if (combination) return;
+                if (this.markedTiles?.length)
+                    this._renewTiles(this.markedTiles)
+                else
+                    this._newTiles();
+            }, 100);
         });
     }
 
     detached() {
         this._clickSubscription.dispose();
         this._hintSubscription.dispose();
+        this._readySubscription.dispose();
     }
 
-    _evaluate(tiles) {
-        const treats = Object.keys(tiles[0].treats);
-        const treatSets = {};
-        treats.forEach(treat => treatSets[treat] = new Set(tiles.map(tile => tile[treat])));
+    currentCombinationChanged(index) {
+        this._highlightTiles(this.allCorrectCombinations[index]);
+    }
 
-        const inclusiveResults = treats.map(treat => treatSets[treat].size === 1).filter(result => result).length;
-        const exclusiveResults = treats.map(treat => treatSets[treat].size === 3).filter(result => result).length;
+    _highlightTiles(tiles) {
+        tiles.forEach(tile => tile.marked = true);
+        setTimeout(_ => tiles.forEach(tile => tile.marked = false), 1500);
+    }
+
+    _newTiles() {
+        this.tiles = [];
+        for (let i = 0; i < this.tileCount; i++)
+            this.tiles.push({ id: i });
+    }
+
+    _isCorrect(tiles) {
+        const alltreats = Object.keys(tiles[0].treats);
+        const treatSets = {};
+        alltreats.forEach(treat => treatSets[treat] = new Set(tiles.map(tile => tile[treat])));
+
+        const inclusiveResults = alltreats.map(treat => treatSets[treat].size === 1).filter(result => result).length;
+        const exclusiveResults = alltreats.map(treat => treatSets[treat].size === 3).filter(result => result).length;
         const results = inclusiveResults + exclusiveResults;
         const correct = results === 4;
 
         return correct;
     }
 
+    _renewTiles(tiles) {
+        tiles.forEach(tile => {
+            this.tiles.splice(tile.id, 1, { id: tile.id });
+        });
+    }
+
     _checkWin() {
-        const markedTiles = this.tiles.filter(tile => tile.marked);
-        if (markedTiles.length === 3) {
-            const result = this._evaluate(markedTiles);
+        this.markedTiles = this.tiles.filter(tile => tile.marked);
+        if (this.markedTiles.length === 3) {
+            const result = this._isCorrect(this.markedTiles);
             if (result) {
                 this.score += result;
-                // alert('Continue?');
-                this._eventAggregator.publish('renew-tiles', markedTiles);
+                this._renewTiles(this.markedTiles);
             } else {
-                markedTiles.forEach(tile => tile.marked = false);
-                // document.querySelector('tile').triggerEvent('blur');
+                this.markedTiles.forEach(tile => tile.marked = false);
             }
         }
     }
 
-    // binary search this.tiles for any combination of 3 tiles that _evaluate() to true
-    _findWin() {
+    _findCorrectCombinations() {
+        this.allCorrectCombinations = [];
         const combinations = this._getCombinations(this.tiles, 3);
         for (const combination of combinations) {
-            if (this._evaluate(combination)) {
-                return combination;
+            if (this._isCorrect(combination)) {
+                this.allCorrectCombinations.push(combination);
             }
         }
-        return null;
+        return this.allCorrectCombinations[0] || null;
     }
 
     _getCombinations(arr, len) {
