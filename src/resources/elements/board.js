@@ -25,6 +25,7 @@ export class Board {
                 this.score -= 2;
                 setTimeout(_ => combination.forEach(tile => tile.marked = false), 1500);
             } else {
+                // this should never happen
                 this._highlightTiles(this.tiles);
                 setTimeout(_ => {
                     this._newTiles();
@@ -37,11 +38,11 @@ export class Board {
             this._readyTimeout = setTimeout(_ => {
                 const combination = this._findCorrectCombinations();
                 if (combination) return;
-                if (this.markedTiles.length)
+                if (this.markedTiles?.length)
                     this._renewTiles(this.markedTiles)
                 else
                     this._newTiles();
-            }, 500);
+            }, 100);
         });
     }
 
@@ -51,25 +52,19 @@ export class Board {
         this._readySubscription.dispose();
     }
 
+    currentCombinationChanged(index) {
+        this._highlightTiles(this.allCorrectCombinations[index]);
+    }
+
     _highlightTiles(tiles) {
         tiles.forEach(tile => tile.marked = true);
         setTimeout(_ => tiles.forEach(tile => tile.marked = false), 1500);
     }
 
-    currentCombinationChanged(index) {
-        console.log(this.allCorrectCombinations[index]);
-        this._highlightTiles(this.allCorrectCombinations[index]);
-    }
-
-    _newTiles(attempts = 1) {
+    _newTiles() {
         this.tiles = [];
         for (let i = 0; i < this.tileCount; i++)
             this.tiles.push({ id: i });
-        setTimeout(_ => {
-            const combination = this._findCorrectCombinations();
-            if (!combination)
-                this._newTiles(attempts + 1);
-        }, 10);
     }
 
     _isCorrect(tiles) {
@@ -85,17 +80,10 @@ export class Board {
         return correct;
     }
 
-    _renewTiles(tiles, attempts = 1) {
-        console.log(attempts);
-        if (attempts > 100) return;
+    _renewTiles(tiles) {
         tiles.forEach(tile => {
             this.tiles.splice(tile.id, 1, { id: tile.id });
         });
-        setTimeout(_ => {
-            const combination = this._findCorrectCombinations();
-            if (!combination)
-                this._renewTiles(tiles, attempts + 1);
-        }, 10);
     }
 
     _checkWin() {
@@ -104,9 +92,7 @@ export class Board {
             const result = this._isCorrect(this.markedTiles);
             if (result) {
                 this.score += result;
-                setTimeout(_ => {
-                    this._renewTiles(this.markedTiles);
-                }, 1000);
+                this._renewTiles(this.markedTiles);
             } else {
                 this.markedTiles.forEach(tile => tile.marked = false);
             }

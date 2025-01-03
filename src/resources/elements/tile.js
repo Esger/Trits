@@ -22,13 +22,10 @@ export class Tile {
 
     attached() {
         this.tileObj.treats = this.treats;
-        const timeOut = Math.random() * 500 + 500;
         this.tileObj.visible = false;
-        setTimeout(_ => {
-            setTimeout(_ => this._randomizeTreats(), 500);
-            this.tileObj.visible = true;
-            this._eventAggregator.publish('tile-ready');
-        }, timeOut);
+        this._randomizeTreats();
+        this.tileObj.visible = true;
+        this._eventAggregator.publish('tile-ready');
     }
 
     clicked() {
