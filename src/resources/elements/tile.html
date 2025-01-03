@@ -1,13 +1,11 @@
-<template style="--textTransform: ${tileObj.textTransform};
-                --background: ${tileObj.background};
+<template style="--background: ${tileObj.background};
                 --color: ${tileObj.color};
-                --borderRadius: ${tileObj.borderRadiusEven};
-                --borderWidth: ${tileObj.borderWidthEven};"
+                --borderRadius: ${tileObj.borderRadiusEven};"
           class="${tileObj.marked ? 'marked' : ''}
     ${tileObj.visible === false ? 'hidden' : ''}"
           click.delegate="clicked()">
     <require from="./tile.css"></require>
 
-    <h2 innerhtml.bind="tileObj.text"></h2>
+    <h2 innerhtml="${tileObj.id} ${tileObj.text || ' '}"></h2>
 
 </template>

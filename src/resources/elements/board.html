@@ -4,5 +4,7 @@
     <require from="./board.css"></require>
     <tile repeat.for="tile of tiles"
           tile-obj.bind="tile"></tile>
-    <h3>Score: ${score}</h3>
+
+    <h3>Score: ${score} <span>Trits possible: ${allCorrectCombinations.length || ''}</span></h3>
+    <input type="range" min="0" max.bind="allCorrectCombinations.length - 1" step="1" value.bind="currentCombination" change.delegate="currentCombinationChanged(currentCombination)"/>
 </template>
