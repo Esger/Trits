@@ -19,7 +19,6 @@ tile {
     border-width         : var(--borderWidth, 0);
     padding              : .5rem;
     aspect-ratio         : 1;
-    max-width            : max(100vw / (var(--width) + 2), 100vh / (var(--height) + 1));
 
     &.marked {
         outline       : 5px dotted crimson;
