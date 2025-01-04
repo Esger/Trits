@@ -14,23 +14,21 @@ tile {
     background-blend-mode: multiply;
     color                : var(--color);
     text-transform       : var(--textTransform);
-    border-radius        : var(--borderRadius, 9in);
+    border-radius        : var(--borderRadius, 2rem);
     border               : solid;
     border-width         : var(--borderWidth, 0);
     padding              : .5rem;
     aspect-ratio         : 1;
 
     &.marked {
-        outline       : 5px dotted crimson;
-        outline-offset: 3px;
+        filter: drop-shadow(2px 4px 6px #00000088);
     }
 
     @media (hover: hover) {
         cursor: pointer;
 
         &:hover {
-            outline       : 5px dotted crimson;
-            outline-offset: 3px;
+            filter: drop-shadow(2px 4px 6px #00000088);
         }
     }
 
