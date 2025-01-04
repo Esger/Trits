@@ -7,12 +7,16 @@ html {
 }
 
 body {
-    font-family: monospace;
+    font-family    : monospace;
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    align-items    : center;
 }
 
 @media screen and (min-width: 400px) {
     body {
-        margin: 2rem 4rem;
+        margin: 0 auto;
     }
 }
 
@@ -20,6 +24,7 @@ header {
     display        : flex;
     justify-content: space-between;
     align-items    : center;
+    margin-inline  : calc(100vw /(var(--width) + 2));
 }
 
 h1 {
