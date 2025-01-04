@@ -9,15 +9,24 @@ export class Tile {
         this._eventAggregator = eventAggregator;
         const colors = ['crimson', 'olive', 'cornflowerblue'];
         const colorNames = ['crimson', 'olive', 'cornflower&shy;blue'];
+        const faceOptions = ['left', 'center', 'right'];
 
-        this.allTreats = [{
-            text: colorNames,
-            color: colors,
-            background: colors,
-            borderRadiusEven: ['0 9in 9in 0', '9in 0 0 9in', '9in 9in 0 0'],
-        }];
+        this.allTreats = {
+            colors: {
+                text: colorNames,
+                color: colors,
+                background: colors,
+                borderRadiusEven: ['0 9in 9in 0', '9in 0 0 9in', '9in 9in 0 0'],
+            },
+            faces: {
+                chin: faceOptions,
+                hair: faceOptions,
+                nose: faceOptions,
+                mouth: faceOptions,
+            }
+        };
 
-        this.treats = this.allTreats[0];
+        this.treats = this.allTreats.faces;
     }
 
     attached() {
