@@ -3,7 +3,7 @@ board {
     grid-template-columns: repeat(var(--width), 1fr);
     grid-template-rows   : repeat(var(--height), 1fr);
     gap                  : 1rem;
-    margin-inline        : calc(100vw / (var(--width) + 2));
+
 
     footer {
         width          : 100%;
@@ -13,9 +13,9 @@ board {
     }
 }
 
-@media (orientation: portrait) {
+@media screen and (max-width: 400px) {
     board {
-        margin-inline: calc(100vw / (var(--width) + 3));
+        gap: .5rem;
     }
 }
 
