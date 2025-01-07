@@ -25,6 +25,10 @@ board {
     }
 }
 
+.au-stagger {
+    animation-delay: 100ms;
+}
+
 .animate-fadeIn {
     &.au-enter {
         opacity: 0;
