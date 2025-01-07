@@ -19,8 +19,8 @@ tile {
     border-width            : var(--borderWidth, 0);
     padding                 : .5rem;
     aspect-ratio            : 1;
-    --filter                : drop-shadow(0 0 0 #fff);
-    filter                  : var(--filter);
+    --shadow                : none;
+    box-shadow              : var(--shadow);
     transition              : filter .25s ease-in-out;
 
     @media only screen and (orientation: portrait) {
@@ -32,14 +32,14 @@ tile {
     }
 
     &.marked {
-        --filter: drop-shadow(2px 4px 6px #00000088);
+        --shadow: 0 0 3vmin #00000088;
     }
 
     @media (hover: hover) {
         cursor: pointer;
 
         &:hover {
-            --filter: drop-shadow(2px 4px 6px #00000088);
+            --shadow: 0 0 3vmin #00000088;
         }
     }
 
