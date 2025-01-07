@@ -20,10 +20,19 @@ header {
     justify-content: space-between;
     align-items    : center;
     width          : 96vw;
+    margin-block   : 1rem;
+}
+
+@media only screen and (orientation: landscape) {
+    header {
+        margin-block: .5rem -1rem;
+    }
 }
 
 h1 {
-    color: var(--color);
+    color      : var(--color);
+    font-size  : 2rem;
+    font-weight: bold;
 }
 
 button {
