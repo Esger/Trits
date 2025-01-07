@@ -2,12 +2,81 @@ board {
     display              : grid;
     grid-template-columns: repeat(var(--width), 1fr);
     grid-template-rows   : repeat(var(--height), 1fr);
-    gap                  : .5rem;
+    gap                  : 5vmin;
+
 
     footer {
         width          : 100%;
         display        : flex;
         justify-content: space-between;
         align-items    : center;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    board {
+        gap: 3vmin;
+    }
+}
+
+@media only screen and (orientation: landscape) {
+    board {
+        gap: 3vmin;
+    }
+}
+
+.animate-fadeIn {
+    &.au-enter {
+        opacity: 0;
+        scale  : .1;
+    }
+
+    &.au-enter-active {
+        animation: fadeIn .5s ease-out;
+    }
+
+    &.au-entered {
+        opacity: 1;
+        scale  : 1;
+    }
+}
+
+.animate-fadeOut {
+    &.au-leave {
+        opacity: 1;
+        scale  : 1;
+    }
+
+    &.au-leave-active {
+        animation: fadeOut .5s ease-in;
+    }
+
+    &.au-left {
+        opacity: 0;
+        scale  : .1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        scale  : .1;
+    }
+
+    to {
+        opacity: 1;
+        scale  : 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        scale  : 1;
+    }
+
+    to {
+        opacity: 0;
+        scale  : .1;
     }
 }
