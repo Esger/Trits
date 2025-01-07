@@ -6,7 +6,7 @@
           class="au-animate animate-fadeIn animate-fadeOut"
           tile-obj.bind="tile"></tile>
 
-    <h3>Score: ${score} <span class="hide">Trits possible: ${allCorrectCombinations.length || ''}</span></h3>
+    <span portal.bind="'#score'">${score || ''}</span><span class="hide">Trits possible: ${allCorrectCombinations.length || ''}</span>
     <input type="range"
             class="hide"
             min="0"
