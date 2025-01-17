@@ -11,6 +11,7 @@ export class Board {
         this._eventAggregator = eventAggregator;
         this.tileCount = this.WIDTH * this.HEIGHT;
         this.score = 0;
+        this._buildDeck();
         this._newTiles();
         this.allCorrectCombinations = [];
     }
@@ -65,6 +66,26 @@ export class Board {
         this.tiles = [];
         for (let i = 0; i < this.tileCount; i++)
             this.tiles.push({ id: i });
+    }
+
+    _buildDeck() {
+        const features = ['left', 'center', 'right'];
+        const deck = [];
+        for (let i = 0; i < features.length; i++) {
+            for (let j = 0; j < features.length; j++) {
+                for (let k = 0; k < features.length; k++) {
+                    for (let l = 0; l < features.length; l++) {
+                        deck.push({
+                            chin: features[i],
+                            hair: features[j],
+                            nose: features[k],
+                            mouth: features[l]
+                        });
+                    }
+                }
+            }
+        }
+        return deck;
     }
 
     _isCorrect(tiles) {
