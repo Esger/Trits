@@ -9,7 +9,6 @@ export class Board {
 
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
-        this.tileCount = this.WIDTH * this.HEIGHT;
         this.score = 0;
         this._buildDeck();
         this._newTiles();
@@ -62,10 +61,39 @@ export class Board {
         setTimeout(_ => tiles.forEach(tile => tile.marked = false), 1500);
     }
 
+    _drawRandomTile() {
+        return this.deck.splice(Math.floor(Math.random() * this.deck.length), 1)[0];
+    }
+
+    _toDeck(oldtile) {
+        this.deck.splice(oldtile.id, 0, oldtile);
+    }
+
+    _toBoard(tile) {
+        const tileToReplace = this.tiles.find(tile => tile.marked);
+        if (tileToReplace) {
+            tile.x = tileToReplace.x;
+            tile.y = tileToReplace.y;
+            tile.marked = false;
+            const index = this.tiles.indexOf(tileToReplace);
+            this.tiles.splice(index, 1, tile);
+            tileToReplace.x = undefined;
+            tileToReplace.y = undefined;
+            tileToReplace.marked = false;
+        }
+        return tileToReplace;
+    }
+
     _newTiles() {
         this.tiles = [];
-        for (let i = 0; i < this.tileCount; i++)
-            this.tiles.push({ id: i });
+        for (let y = 0; y < this.HEIGHT; y++) {
+            for (let x = 0; x < this.WIDTH; x++) {
+                const newtile = this._drawRandomTile();
+                newtile.x = x;
+                newtile.y = y;
+                this.tiles.push(newtile);
+            }
+        }
     }
 
     _buildDeck() {
@@ -76,6 +104,7 @@ export class Board {
                 for (let k = 0; k < features.length; k++) {
                     for (let l = 0; l < features.length; l++) {
                         deck.push({
+                            id: deck.length,
                             chin: features[i],
                             hair: features[j],
                             nose: features[k],
@@ -85,7 +114,7 @@ export class Board {
                 }
             }
         }
-        return deck;
+        this.deck = deck;
     }
 
     _isCorrect(tiles) {
@@ -101,9 +130,12 @@ export class Board {
         return correct;
     }
 
+
     _renewTiles(tiles) {
         tiles.forEach(tile => {
-            this.tiles.splice(tile.id, 1, { id: tile.id });
+            const newtile = this._drawRandomTile();
+            const replacedTile = this._toBoard(newtile);
+            this._toDeck(replacedTile);
         });
     }
 
