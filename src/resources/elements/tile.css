@@ -3,9 +3,13 @@
 }
 
 tile {
-    width                   : var(--width);
     position                : absolute;
-    left                    : calc(-1.25 * var(--width) + var(--gap));
+    --maxSize               : calc((95dvh - ((var(--width) - 1) * var(--gap))) / var(--width));
+    --size                  : calc(((95vmin - ((var(--width) - 1) * var(--gap)))) / var(--width));
+    width                   : var(--size);
+    --left                  : 0;
+    left                    : var(--left);
+    /* calc(-1.25 * var(--width) + var(--gap)); */
     top                     : 0;
     display                 : flex;
     justify-content         : center;
@@ -25,16 +29,15 @@ tile {
     --shadow                : none;
     box-shadow              : var(--shadow);
     transition              : filter .25s ease-in-out;
-    --gap                   : 2rem;
-    transform               : translate(calc(var(--x, 0) * (var(--width) + var(--gap))),
-            calc(var(--y, 0) * (var(--width) + var(--gap))));
+    transform               : translate(calc(var(--x, 0) * (var(--size) + var(--gap))),
+            calc(var(--y, 0) * (var(--size) + var(--gap))));
 
-    @media only screen and (orientation: portrait) {
-        --width: 30vw;
-    }
+    /* @media only screen and (orientation: portrait) {
+    } */
 
     @media only screen and (orientation: landscape) {
-        --width: 20vh;
+        --size: calc(((95vmin - ((var(--height) - 1) * var(--gap)))) / var(--height));
+        --left: calc((var(--size) + var(--gap)));
     }
 
     &.marked {

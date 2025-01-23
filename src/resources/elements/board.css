@@ -1,5 +1,6 @@
 board {
     position: relative;
+    --gap   : 2rem;
 
     footer {
         width          : 100%;
@@ -9,15 +10,17 @@ board {
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (orientation: portrait) {
     board {
-        gap: 3vmin;
+        width : 95vmin;
+        height: calc(var(--height) * 95vmin / var(--width));
     }
 }
 
-@media only screen and (orientation: landscape) {
+@media screen and (orientation: landscape) {
     board {
-        gap: 3vmin;
+        width : 95vmin;
+        height: 95vmin;
     }
 }
 
