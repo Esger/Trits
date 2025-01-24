@@ -38,6 +38,10 @@ tile {
     @media only screen and (orientation: landscape) {
         --size: calc(((95vmin - ((var(--height) - 1) * var(--gap)))) / var(--height));
         --left: calc((var(--size) + var(--gap)));
+
+        &.deck {
+            --left: calc(-1 * var(--size) + var(--gap));
+        }
     }
 
     &.marked {
