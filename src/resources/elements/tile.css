@@ -3,49 +3,42 @@
 }
 
 tile {
-    position                : absolute;
-    --maxSize               : calc((95dvh - ((var(--width) - 1) * var(--gap))) / var(--width));
-    --size                  : calc(((95vmin - ((var(--width) - 1) * var(--gap)))) / var(--width));
-    width                   : var(--size);
-    --left                  : 0;
-    left                    : var(--left);
-    /* calc(-1.25 * var(--width) + var(--gap)); */
-    top                     : 0;
-    display                 : flex;
-    justify-content         : center;
-    align-items             : center;
-    /* background-color     : color-mix(in srgb, var(--background) 20%, white); */
-    background-color        : transparent;
-    background-image        : url('assets/kinnen.webp'), url('assets/neuzen.webp'), url('assets/haren.webp'), url('assets/monden.webp');
-    background-position     : var(--chin) center, var(--nose) center, var(--hair) center, var(--mouth) center;
-    background-size         : cover, cover, cover, cover;
-    background-blend-mode   : multiply;
-    color                   : var(--color);
-    text-transform          : var(--textTransform);
-    border-radius           : var(--borderRadius, 2rem);
-    border                  : solid;
-    border-width            : var(--borderWidth, 0);
-    aspect-ratio            : 1;
-    --shadow                : none;
-    box-shadow              : var(--shadow);
-    transition              : filter .25s ease-in-out;
-    transform               : translate(calc(var(--x, 0) * (var(--size) + var(--gap))),
-            calc(var(--y, 0) * (var(--size) + var(--gap))));
+    position             : absolute;
+    --size               : calc(((95vmin - ((var(--width) - 1) * var(--gap)))) / var(--width));
+    --top                : 0;
+    width                : var(--size);
+    left                 : 0;
+    top                  : var(--top);
+    display              : flex;
+    justify-content      : center;
+    align-items          : center;
+    background-color     : transparent;
+    background-image     : url('assets/kinnen.webp'), url('assets/neuzen.webp'), url('assets/haren.webp'), url('assets/monden.webp');
+    background-position  : var(--chin) center, var(--nose) center, var(--hair) center, var(--mouth) center;
+    background-size      : cover, cover, cover, cover;
+    background-blend-mode: multiply;
+    color                : var(--color);
+    text-transform       : var(--textTransform);
+    border-radius        : var(--borderRadius, 3dvh);
+    border               : solid;
+    border-width         : var(--borderWidth, 0);
+    aspect-ratio         : 1;
+    --shadow             : none;
+    box-shadow           : var(--shadow);
+    transition           : transform 5s ease-in-out;
 
-    /* @media only screen and (orientation: portrait) {
-    } */
+    &.onBoard {
+        transform: translate(calc((var(--x, 0) + 1) * (var(--size) + var(--gap))),
+                calc(var(--y, 0) * (var(--size) + var(--gap))));
+    }
 
-    @media only screen and (orientation: landscape) {
-        --size: calc(((95vmin - ((var(--height) - 1) * var(--gap)))) / var(--height));
-        --left: calc((var(--size) + var(--gap)));
-
-        &.deck {
-            --left: calc(-1 * var(--size) + var(--gap));
-        }
+    &.deck {
+        transform: translate(0, 0);
     }
 
     &.marked {
         --shadow: 0 0 3vmin #00000088;
+        z-index : 1;
     }
 
     @media (hover: hover) {
@@ -71,5 +64,14 @@ tile {
         h2 {
             font-size: 1rem;
         }
+    }
+}
+
+/* @media only screen and (orientation: portrait) {
+    } */
+
+@media only screen and (orientation: landscape) {
+    tile {
+        --size: calc(((95vmin - ((var(--height) - 1) * var(--gap)))) / var(--height));
     }
 }

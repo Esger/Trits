@@ -127,10 +127,10 @@ export class Board {
         tiles.forEach(_ => randomIndices.push(this._getRandomIndex()));
         for (let i = 0; i < randomIndices.length; i++) {
             const randomTile = this.deck[randomIndices[i]];
-            randomTile.onBoard = true;
-            randomTile.marked = false;
             randomTile.x = tiles[i].x;
             randomTile.y = tiles[i].y;
+            randomTile.onBoard = true;
+            randomTile.marked = false;
             tiles[i].onBoard = false;
             tiles[i].marked = false;
             tiles[i].x = 0;

@@ -1,6 +1,6 @@
 board {
     position: relative;
-    --gap   : 2rem;
+    --gap   : 3dvh;
 
     footer {
         width          : 100%;
