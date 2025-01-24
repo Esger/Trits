@@ -10,8 +10,6 @@ export class Tile {
     }
 
     attached() {
-        this.tileObj.visible = false;
-        this.tileObj.visible = true;
         this._eventAggregator.publish('tile-ready');
     }
 

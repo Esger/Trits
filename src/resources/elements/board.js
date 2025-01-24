@@ -12,6 +12,7 @@ export class Board {
         this.score = 0;
         this._buildDeck();
         this._newTiles();
+        console.log(this.deck);
         this.allCorrectCombinations = [];
     }
 
@@ -20,13 +21,14 @@ export class Board {
         this._hintSubscription = this._eventAggregator.subscribe('hint', _ => {
             const combination = this._findCorrectCombinations();
             if (combination) {
-                this.tiles.forEach(tile => tile.marked = false);
+                this.deck.forEach(tile => tile.marked = false);
                 combination.forEach(tile => tile.marked = true);
                 this.score -= 2;
                 setTimeout(_ => combination.forEach(tile => tile.marked = false), 1500);
             } else {
                 // this should never happen
-                this._highlightTiles(this.tiles);
+                const tiles = this.deck.filter(tile => tile.onBoard);
+                this._highlightTiles(tiles);
                 setTimeout(_ => {
                     this._newTiles();
                     this.score += 10;
@@ -61,60 +63,49 @@ export class Board {
         setTimeout(_ => tiles.forEach(tile => tile.marked = false), 1500);
     }
 
-    _drawRandomTile() {
-        return this.deck.splice(Math.floor(Math.random() * this.deck.length), 1)[0];
-    }
-
-    _toDeck(oldtile) {
-        this.deck.splice(oldtile.id, 0, oldtile);
-    }
-
-    _toBoard(tile) {
-        const tileToReplace = this.tiles.find(tile => tile.marked);
-        if (tileToReplace) {
-            tile.x = tileToReplace.x;
-            tile.y = tileToReplace.y;
-            tile.marked = false;
-            const index = this.tiles.indexOf(tileToReplace);
-            this.tiles.splice(index, 1, tile);
-            tileToReplace.x = undefined;
-            tileToReplace.y = undefined;
-            tileToReplace.marked = false;
-        }
-        return tileToReplace;
+    _getRandomIndex() {
+        let index;
+        do
+            index = Math.floor(Math.random() * this.deck.length);
+        while (this.deck[index].onBoard)
+        return index;
     }
 
     _newTiles() {
-        this.tiles = [];
         for (let y = 0; y < this.HEIGHT; y++) {
             for (let x = 0; x < this.WIDTH; x++) {
-                const newtile = this._drawRandomTile();
-                newtile.x = x;
-                newtile.y = y;
-                this.tiles.push(newtile);
+                const randomIndex = this._getRandomIndex();
+                const tile = this.deck[randomIndex];
+                tile.x = x;
+                tile.y = y;
+                tile.onBoard = true;
+                tile.marked = false;
             }
         }
     }
 
     _buildDeck() {
         const features = ['left', 'center', 'right'];
-        const deck = [];
+        this.deck = [];
         for (let i = 0; i < features.length; i++) {
             for (let j = 0; j < features.length; j++) {
                 for (let k = 0; k < features.length; k++) {
                     for (let l = 0; l < features.length; l++) {
-                        deck.push({
-                            id: deck.length,
+                        this.deck.push({
+                            id: this.deck.length,
                             chin: features[i],
                             hair: features[j],
                             nose: features[k],
-                            mouth: features[l]
+                            mouth: features[l],
+                            x: 0,
+                            y: 0,
+                            onBoard: false,
+                            marked: false
                         });
                     }
                 }
             }
         }
-        this.deck = deck;
     }
 
     _isCorrect(tiles) {
@@ -132,15 +123,16 @@ export class Board {
 
 
     _renewTiles(tiles) {
-        tiles.forEach(tile => {
-            const newtile = this._drawRandomTile();
-            const replacedTile = this._toBoard(newtile);
-            this._toDeck(replacedTile);
-        });
+        const randomIndices = [];
+        tiles.forEach(_ => randomIndices.push(this._getRandomIndex()));
+        for (let i = 0; i < randomIndices.length; i++) {
+            this.deck[randomIndices[i]].onBoard = true;
+            tiles[i].onBoard = false;
+        }
     }
 
     _checkWin() {
-        this.markedTiles = this.tiles.filter(tile => tile.marked);
+        this.markedTiles = this.deck.filter(tile => tile.marked);
         if (this.markedTiles.length === 3) {
             const result = this._isCorrect(this.markedTiles);
             if (result) {
@@ -154,7 +146,8 @@ export class Board {
 
     _findCorrectCombinations() {
         this.allCorrectCombinations = [];
-        const combinations = this._getCombinations(this.tiles, 3);
+        const onboardTiles = this.deck.filter(tile => tile.onBoard);
+        const combinations = this._getCombinations(onboardTiles, 3);
         for (const combination of combinations) {
             if (this._isCorrect(combination)) {
                 this.allCorrectCombinations.push(combination);
