@@ -118,7 +118,7 @@ export class Board {
     }
 
     _isCorrect(tiles) {
-        const alltreats = Object.keys(tiles[0].treats);
+        const alltreats = ['chin', 'hair', 'nose', 'mouth'];
         const treatSets = {};
         alltreats.forEach(treat => treatSets[treat] = new Set(tiles.map(tile => tile[treat])));
 
