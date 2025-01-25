@@ -126,15 +126,24 @@ export class Board {
         const randomIndices = [];
         tiles.forEach(_ => randomIndices.push(this._getRandomIndex()));
         for (let i = 0; i < randomIndices.length; i++) {
+            const boardTile = tiles[i];
             const randomTile = this.deck[randomIndices[i]];
-            randomTile.x = tiles[i].x;
-            randomTile.y = tiles[i].y;
-            randomTile.onBoard = true;
-            randomTile.marked = false;
-            tiles[i].onBoard = false;
-            tiles[i].marked = false;
-            tiles[i].x = 0;
-            tiles[i].y = 0;
+            randomTile.toMove = true;
+            randomTile.x = boardTile.x;
+            randomTile.y = boardTile.y;
+            boardTile.x = 0;
+            boardTile.y = 0;
+            boardTile.onBoard = false;
+            boardTile.unMarkOnTransitionEnd();
+
+            boardTile.element.addEventListener('transitionend', _ => {
+                const tileToMove = this.deck.find(tile => tile.toMove && !tile.marked);
+                if (!tileToMove) return;
+                tileToMove.marked = true;
+                tileToMove.onBoard = true;
+                tileToMove.toMove = false;
+                tileToMove.unMarkOnTransitionEnd();
+            });
         }
     }
 

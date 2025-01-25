@@ -25,7 +25,7 @@ tile {
     aspect-ratio         : 1;
     --shadow             : none;
     box-shadow           : var(--shadow);
-    transition           : transform 5s ease-in-out;
+    transition           : transform 2s ease-in-out;
 
     &.onBoard {
         transform: translate(calc((var(--x, 0) + 1) * (var(--size) + var(--gap))),
