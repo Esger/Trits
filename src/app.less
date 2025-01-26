@@ -23,7 +23,7 @@ body {
 
 header {
     position       : absolute;
-    right          : 5vw;
+    right          : 7vw;
     top            : 0;
     display        : flex;
     justify-content: flex-end;
@@ -38,18 +38,20 @@ header {
     }
 
     header {
-        left            : 5vw;
+        left            : 7vw;
         right           : auto;
         width           : 95vh;
         margin-block    : .5rem -1rem;
-        rotate          : 90deg;
+        rotate          : -90deg;
+        translate       : 0 85vh;
         transform-origin: left;
+        justify-content : flex-start;
     }
 }
 
 h1 {
     color      : var(--color);
-    font-size  : 2rem;
+    font-size  : 10vmin;
     font-weight: bold;
 }
 
