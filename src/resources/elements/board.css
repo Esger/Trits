@@ -1,6 +1,8 @@
 board {
     position: relative;
     --gap   : 3dvh;
+    width   : 85vmin;
+    height  : calc((var(--height) + 2) * 85vmin / var(--width));
 
     footer {
         width          : 100%;
@@ -10,17 +12,10 @@ board {
     }
 }
 
-@media screen and (orientation: portrait) {
-    board {
-        width : 95vmin;
-        height: calc(var(--height) * 95vmin / var(--width));
-    }
-}
-
 @media screen and (orientation: landscape) {
     board {
-        width : 95vmin;
-        height: 95vmin;
+        width : 85vmin;
+        height: 85vmin;
     }
 }
 
