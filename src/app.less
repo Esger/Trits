@@ -1,5 +1,5 @@
 :root {
-    --color: crimson;
+    --color: darkslategray;
 }
 
 html,
@@ -16,15 +16,17 @@ body {
     justify-content: flex-end;
     align-items    : center;
     margin         : 0;
+    font-family    : "Kranky", serif;
+    font-weight    : 400;
+    font-style     : normal;
 }
 
 header {
     position       : absolute;
+    right          : 5vw;
     top            : 0;
-    left           : 50%;
-    translate      : -50% 0;
     display        : flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items    : center;
     margin-block   : 1rem;
     width          : 95vw;
@@ -36,7 +38,12 @@ header {
     }
 
     header {
-        margin-block: .5rem -1rem;
+        left            : 5vw;
+        right           : auto;
+        width           : 95vh;
+        margin-block    : .5rem -1rem;
+        rotate          : 90deg;
+        transform-origin: left;
     }
 }
 

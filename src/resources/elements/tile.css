@@ -3,32 +3,32 @@
 }
 
 tile {
-    position             : absolute;
-    --size               : calc(((85vmin - ((var(--width) - 1) * var(--gap)))) / var(--width));
-    --top                : 0;
-    width                : var(--size);
-    left                 : 0;
-    top                  : var(--top);
-    display              : flex;
-    justify-content      : center;
-    align-items          : center;
-    background-color     : transparent;
-    background-position  : var(--chin) center, var(--nose) center, var(--hair) center, var(--mouth) center;
-    background-size      : cover, cover, cover, cover;
-    background-blend-mode: multiply;
-    color                : var(--color);
-    text-transform       : var(--textTransform);
-    border-radius        : var(--borderRadius, 3dvh);
-    border               : solid;
-    border-width         : var(--borderWidth, 0);
-    aspect-ratio         : 1;
-    --shadow             : none;
-    box-shadow           : var(--shadow);
-    transition           : transform 1s ease-in-out;
+    position        : absolute;
+    --size          : calc(((85vmin - ((var(--width) - 1) * var(--gap)))) / var(--width));
+    --top           : 0;
+    width           : var(--size);
+    left            : 0;
+    top             : var(--top);
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    background-color: transparent;
+    color           : var(--color);
+    text-transform  : var(--textTransform);
+    border-radius   : var(--borderRadius, 3dvh);
+    border          : solid;
+    border-width    : var(--borderWidth, 0);
+    aspect-ratio    : 1;
+    --shadow        : none;
+    box-shadow      : var(--shadow);
+    transition      : transform 1s ease-in-out;
 
     &.onBoard,
     &.toDeck {
-        background-image: url('assets/kinnen.webp'), url('assets/neuzen.webp'), url('assets/haren.webp'), url('assets/monden.webp');
+        background-image     : url('assets/kinnen.webp'), url('assets/neuzen.webp'), url('assets/haren.webp'), url('assets/monden.webp');
+        background-position  : var(--chin) center, var(--nose) center, var(--hair) center, var(--mouth) center;
+        background-size      : cover, cover, cover, cover;
+        background-blend-mode: multiply;
     }
 
     &.onBoard {
