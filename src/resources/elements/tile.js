@@ -11,9 +11,19 @@ export class Tile {
     }
 
     attached() {
-        this._eventAggregator.publish('tile-ready');
-        this.tileObj.element = this._element;
-        this.tileObj.unMarkOnTransitionEnd = this.unMarkOnTransitionEnd;
+        this._toDeckSubscription = this._eventAggregator.subscribe('tile-to-deck-ready', _ => {
+            if (!this.tileObj.toBoard) return;
+            this.tileObj.marked = true;
+            this.tileObj.onBoard = true;
+            this.tileObj.toBoard = false;
+        });
+        this._toBoardSubscription = this._eventAggregator.subscribe('tile-to-board-ready', tileObj => {
+            if (tileObj.id !== this.tileObj.id) return;
+            this.tileObj.marked = false;
+            this.tileObj.toDeck = false;
+            this.tileObj.toBoard = false;
+        });
+        this._element.addEventListener('transitionend', _ => this.deckOrBoard());
     }
 
     clicked() {
@@ -21,9 +31,20 @@ export class Tile {
         this._eventAggregator.publish('tile-clicked');
     }
 
-    unMarkOnTransitionEnd = _ => {
-        this._element.addEventListener('transitionend', _ => {
-            this.tileObj.marked = false;
-        }, { once: true });
+    deckOrBoard() {
+        this.tileObj.marked = false;
+        if (this.tileObj.toBoard) {
+            this._eventAggregator.publish('tile-to-board-ready', this.tileObj);
+        }
+        if (this.tileObj.toDeck) {
+            this._eventAggregator.publish('tile-to-deck-ready');
+        }
     }
+
+    detached() {
+        this._toDeckSubscription.dispose();
+        this._toBoardSubscription.dispose();
+        this._element.removeEventListener('transitionend', this.deckOrBoard);
+    }
+
 }

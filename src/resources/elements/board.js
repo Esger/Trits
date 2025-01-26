@@ -10,7 +10,6 @@ export class Board {
     constructor(eventAggregator) {
         this._eventAggregator = eventAggregator;
         this.score = 0;
-        this._buildDeck();
         this._newTiles();
         console.log(this.deck);
         this.allCorrectCombinations = [];
@@ -26,25 +25,9 @@ export class Board {
                 this.score -= 2;
                 setTimeout(_ => combination.forEach(tile => tile.marked = false), 1500);
             } else {
-                // this should never happen
-                const tiles = this.deck.filter(tile => tile.onBoard);
-                this._highlightTiles(tiles);
-                setTimeout(_ => {
-                    this._newTiles();
-                    this.score += 10;
-                }, 1600);
+                const tile = this.deck.filter(tile => !tile.onBoard)[0];
+                this._highlightTiles([tile]);
             }
-        });
-        this._readySubscription = this._eventAggregator.subscribe('tile-ready', _ => {
-            clearTimeout(this._readyTimeout);
-            this._readyTimeout = setTimeout(_ => {
-                const combination = this._findCorrectCombinations();
-                if (combination) return;
-                if (this.markedTiles?.length)
-                    this._renewTiles(this.markedTiles)
-                else
-                    this._newTiles();
-            }, 100);
         });
     }
 
@@ -52,6 +35,7 @@ export class Board {
         this._clickSubscription.dispose();
         this._hintSubscription.dispose();
         this._readySubscription.dispose();
+        this._toDeckSubscription.dispose();
     }
 
     currentCombinationChanged(index) {
@@ -60,18 +44,24 @@ export class Board {
 
     _highlightTiles(tiles) {
         tiles.forEach(tile => tile.marked = true);
-        setTimeout(_ => tiles.forEach(tile => tile.marked = false), 1500);
+        setTimeout(_ => tiles.forEach(tile => tile.marked = false), 1200);
     }
 
     _getRandomIndex() {
-        let index;
-        do
+        let tile, index, found = false;
+        while (!found) {
             index = Math.floor(Math.random() * this.deck.length);
-        while (this.deck[index].onBoard)
-        return index;
+            tile = this.deck[index];
+            if (!(tile.onBoard || tile.marked || tile.toBoard || tile.toDeck || tile.chosen)) {
+                found === true;
+                tile.chosen = true;
+                return index;
+            };
+        }
     }
 
     _newTiles() {
+        this._buildDeck();
         for (let y = 0; y < this.HEIGHT; y++) {
             for (let x = 0; x < this.WIDTH; x++) {
                 const randomIndex = this._getRandomIndex();
@@ -82,6 +72,7 @@ export class Board {
                 tile.marked = false;
             }
         }
+        this.deck.forEach(tile => tile.chosen = false);
     }
 
     _buildDeck() {
@@ -125,25 +116,23 @@ export class Board {
     _renewTiles(tiles) {
         const randomIndices = [];
         tiles.forEach(_ => randomIndices.push(this._getRandomIndex()));
+        this.deck.forEach(tile => tile.chosen = false);
         for (let i = 0; i < randomIndices.length; i++) {
             const boardTile = tiles[i];
             const randomTile = this.deck[randomIndices[i]];
-            randomTile.toMove = true;
-            randomTile.x = boardTile.x;
-            randomTile.y = boardTile.y;
-            boardTile.x = 0;
-            boardTile.y = 0;
-            boardTile.onBoard = false;
-            boardTile.unMarkOnTransitionEnd();
-
-            boardTile.element.addEventListener('transitionend', _ => {
-                const tileToMove = this.deck.find(tile => tile.toMove && !tile.marked);
-                if (!tileToMove) return;
-                tileToMove.marked = true;
-                tileToMove.onBoard = true;
-                tileToMove.toMove = false;
-                tileToMove.unMarkOnTransitionEnd();
-            });
+            const toBoard = (toBoard, toDeck) => {
+                toBoard.x = toDeck.x;
+                toBoard.y = toDeck.y;
+                toBoard.toBoard = true;
+            }
+            const toDeck = tile => {
+                tile.x = 0;
+                tile.y = 0;
+                tile.toDeck = true;
+                tile.onBoard = false;
+            }
+            toBoard(randomTile, boardTile);
+            toDeck(boardTile);
         }
     }
 
