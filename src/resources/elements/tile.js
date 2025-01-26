@@ -20,24 +20,29 @@ export class Tile {
         this._toBoardSubscription = this._eventAggregator.subscribe('tile-to-board-ready', tileObj => {
             if (tileObj.id !== this.tileObj.id) return;
             this.tileObj.marked = false;
-            this.tileObj.toDeck = false;
             this.tileObj.toBoard = false;
         });
         this._element.addEventListener('transitionend', _ => this.deckOrBoard());
     }
 
     clicked() {
-        this.tileObj.marked = !this.tileObj.marked;
-        this._eventAggregator.publish('tile-clicked');
+        if (this.tileObj.onBoard) {
+            this.tileObj.marked = !this.tileObj.marked;
+            this._eventAggregator.publish('tile-clicked');
+        } else {
+            this._eventAggregator.publish('hint');
+        }
     }
 
     deckOrBoard() {
         this.tileObj.marked = false;
         if (this.tileObj.toBoard) {
             this._eventAggregator.publish('tile-to-board-ready', this.tileObj);
+            this.tileObj.toBoard = false;
         }
         if (this.tileObj.toDeck) {
             this._eventAggregator.publish('tile-to-deck-ready');
+            this.tileObj.toDeck = false;
         }
     }
 

@@ -13,7 +13,6 @@ tile {
     justify-content      : center;
     align-items          : center;
     background-color     : transparent;
-    background-image     : url('assets/kinnen.webp'), url('assets/neuzen.webp'), url('assets/haren.webp'), url('assets/monden.webp');
     background-position  : var(--chin) center, var(--nose) center, var(--hair) center, var(--mouth) center;
     background-size      : cover, cover, cover, cover;
     background-blend-mode: multiply;
@@ -26,6 +25,11 @@ tile {
     --shadow             : none;
     box-shadow           : var(--shadow);
     transition           : transform 1s ease-in-out;
+
+    &.onBoard,
+    &.toDeck {
+        background-image: url('assets/kinnen.webp'), url('assets/neuzen.webp'), url('assets/haren.webp'), url('assets/monden.webp');
+    }
 
     &.onBoard {
         transform: translate(calc(var(--x, 0) * (var(--size) + var(--gap))),
@@ -63,6 +67,7 @@ tile {
         text-align    : center;
         text-transform: inherit;
         line-height   : 1.1rem;
+        font-size     : 20vmin;
     }
 
     @media screen and (max-width: 400px) {
