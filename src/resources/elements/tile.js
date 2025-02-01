@@ -1,58 +1,55 @@
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
-@inject(EventAggregator)
+@inject(Element, EventAggregator)
 export class Tile {
     @bindable tileObj;
 
-    constructor(eventAggregator) {
+    constructor(element, eventAggregator) {
+        this._element = element;
         this._eventAggregator = eventAggregator;
-        const colors = ['crimson', 'olive', 'cornflowerblue'];
-        const colorNames = ['crimson', 'olive', 'cornflower&shy;blue'];
-        const faceOptions = ['left', 'center', 'right'];
-
-        this.allTreats = {
-            colors: {
-                text: colorNames,
-                color: colors,
-                background: colors,
-                borderRadiusEven: ['0 9in 9in 0', '9in 0 0 9in', '9in 9in 0 0'],
-            },
-            faces: {
-                chin: faceOptions,
-                hair: faceOptions,
-                nose: faceOptions,
-                mouth: faceOptions,
-            }
-        };
-
-        this.treats = this.allTreats.faces;
     }
 
     attached() {
-        this.tileObj.treats = this.treats;
-        this.tileObj.visible = false;
-        this._randomizeTreats();
-        this.tileObj.visible = true;
-        this._eventAggregator.publish('tile-ready');
+        this._toDeckSubscription = this._eventAggregator.subscribe('tile-to-deck-ready', _ => {
+            if (!this.tileObj.toBoard) return;
+            this.tileObj.marked = true;
+            this.tileObj.onBoard = true;
+            this.tileObj.toBoard = false;
+        });
+        this._toBoardSubscription = this._eventAggregator.subscribe('tile-to-board-ready', tileObj => {
+            if (tileObj.id !== this.tileObj.id) return;
+            this.tileObj.marked = false;
+            this.tileObj.toBoard = false;
+        });
+        this._element.addEventListener('transitionend', _ => this.deckOrBoard());
     }
 
     clicked() {
-        this.tileObj.marked = !this.tileObj.marked;
-        this._eventAggregator.publish('tile-clicked');
-    }
-
-    _randomizeTreats() {
-        const treats = Object.keys(this.treats);
-        for (let treat of treats) {
-            this.tileObj[treat] = this._randomProperty(this.treats[treat]);
+        if (this.tileObj.onBoard || this.tileObj.drawn) {
+            this.tileObj.marked = !this.tileObj.marked;
+            this._eventAggregator.publish('tile-clicked');
+        } else {
+            this._eventAggregator.publish('hint');
         }
-        this.tileObj.marked = false;
-        this.tileObj.visible = true;
     }
 
-    _randomProperty(properties) {
-        return properties[Math.floor(Math.random() * properties.length)]
+    deckOrBoard() {
+        this.tileObj.marked = false;
+        if (this.tileObj.toBoard) {
+            this._eventAggregator.publish('tile-to-board-ready', this.tileObj);
+            this.tileObj.toBoard = false;
+        }
+        if (this.tileObj.toDeck) {
+            this._eventAggregator.publish('tile-to-deck-ready');
+            this.tileObj.toDeck = false;
+        }
+    }
+
+    detached() {
+        this._toDeckSubscription.dispose();
+        this._toBoardSubscription.dispose();
+        this._element.removeEventListener('transitionend', this.deckOrBoard);
     }
 
 }
