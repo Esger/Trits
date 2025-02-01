@@ -9,9 +9,10 @@
 
     <span portal.bind="'#score'">
         <span>${score || ''}</span>
-    <span class="hide" click.delegate="highLightTiles()"># ${allCorrectCombinations.length || '0'}</span>
+    <span if.bind="testing" click.delegate="highLightTiles()"># ${allCorrectCombinations.length || '0'}</span>
     </span>
-    <input type="range"
+    <input if.bind="testing"
+            type="range"
             class="hide"
             min="0"
             max.bind="allCorrectCombinations.length - 1"
