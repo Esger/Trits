@@ -1,29 +1,58 @@
 :root {
-    --color: crimson;
+    --color: darkslategray;
 }
 
-html {
+html,
+body {
     background-color: #fff;
+    height          : 100dvh;
+    overflow        : hidden;
 }
 
 body {
-    font-family: monospace;
-}
-
-@media screen and (min-width: 400px) {
-    body {
-        margin: 2rem 4rem;
-    }
+    font-family    : monospace;
+    display        : flex;
+    flex-direction : column;
+    justify-content: flex-end;
+    align-items    : center;
+    margin         : 0;
+    font-family    : "Kranky", serif;
+    font-weight    : 400;
+    font-style     : normal;
 }
 
 header {
+    position       : absolute;
+    right          : 7vw;
+    top            : 0;
     display        : flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items    : center;
+    margin-block   : 1rem;
+    width          : 95vw;
+}
+
+@media only screen and (orientation: landscape) {
+    body {
+        justify-content: center;
+    }
+
+    header {
+        left            : 7vw;
+        right           : auto;
+        width           : 95vh;
+        margin-block    : .5rem -1rem;
+        rotate          : -90deg;
+        translate       : 0 85vh;
+        transform-origin: left;
+        justify-content : flex-start;
+    }
 }
 
 h1 {
-    color: var(--color);
+    color      : var(--color);
+    font-size  : 10vmin;
+    font-weight: bold;
 }
 
 button {
@@ -34,4 +63,9 @@ button {
     border-radius   : .5rem;
     cursor          : pointer;
     font-weight     : bold;
+}
+
+.hide {
+    opacity       : 0;
+    pointer-events: none;
 }

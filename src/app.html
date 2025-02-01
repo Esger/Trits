@@ -1,9 +1,10 @@
 <template>
     <require from="./app.css"></require>
+    <require from="./reset.css"></require>
     <require from="./elements/board"></require>
 
     <header>
-        <h1>Trits</h1><button type="button" click.delegate="hint()">?</button>
+        <h1>Trits <span id="score"></span></h1>
     </header>
     <board></board>
 </template>

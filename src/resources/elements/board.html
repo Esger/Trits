@@ -2,7 +2,21 @@
                 --height: ${HEIGHT};">
     <require from="elements/tile"></require>
     <require from="./board.css"></require>
-    <tile repeat.for="tile of tiles"
+
+    <tile repeat.for="tile of deck"
+          class="au-animate animate-fadeIn animate-fadeOut"
           tile-obj.bind="tile"></tile>
-    <h3>Score: ${score}</h3>
+
+    <span portal.bind="'#score'">
+        <span>${score || ''}</span>
+    <span if.bind="testing" click.delegate="highLightTiles()"># ${allCorrectCombinations.length || '0'}</span>
+    </span>
+    <input if.bind="testing"
+            type="range"
+            class="hide"
+            min="0"
+            max.bind="allCorrectCombinations.length - 1"
+            step="1"
+            value.bind="currentCombination"
+            change.delegate="currentCombinationChanged(currentCombination)"/>
 </template>

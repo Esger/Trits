@@ -2,29 +2,66 @@
     text-transform: var(--textTransform);
 }
 
-
 tile {
+    position        : absolute;
+    --size          : calc(((85vmin - ((var(--width) - 1) * var(--gap)))) / var(--width));
+    --top           : 0;
+    width           : var(--size);
+    left            : 0;
+    top             : var(--top);
     display         : flex;
     justify-content : center;
     align-items     : center;
-    background-color: color-mix(in srgb, var(--background) 20%, white);
+    background-color: transparent;
     color           : var(--color);
     text-transform  : var(--textTransform);
-    border-radius   : var(--borderRadius, 9in);
+    border-radius   : var(--borderRadius, 2dvh);
     border          : solid;
     border-width    : var(--borderWidth, 0);
-    padding         : .5rem;
-    height          : 5rem;
+    aspect-ratio    : 1;
+    --shadow        : none;
+    box-shadow      : var(--shadow);
+    transition      : transform 1s ease-in-out;
+
+    &.face {
+        background-image     : url('assets/kinnen.webp'), url('assets/neuzen.webp'), url('assets/haren.webp'), url('assets/monden.webp');
+        background-position  : var(--chin) center, var(--nose) center, var(--hair) center, var(--mouth) center;
+        background-size      : cover, cover, cover, cover;
+        background-blend-mode: multiply;
+    }
+
+    &.onBoard {
+        transform: translate(calc(var(--x, 0) * (var(--size) + var(--gap))),
+                calc((var(--y, 0) + 1) * (var(--size) + var(--gap))));
+
+        @media only screen and (orientation: landscape) {
+            transform: translate(calc((var(--x, 0) + 1) * (var(--size) + var(--gap))),
+                    calc(var(--y, 0) * (var(--size) + var(--gap))));
+        }
+    }
+
+    &.deck {
+        transform: translate(0, 0);
+    }
 
     &.marked {
-        outline       : 3px dotted crimson;
-        outline-offset: 3px;
+        --shadow: 0 0 2vmin #000000a8;
+        z-index : 1;
+    }
+
+    &.drawn {
+        transform: translate(calc(var(--size) + var(--gap)), 0);
+
+        @media only screen and (orientation: landscape) {
+            transform: translate(0, calc(var(--size) + var(--gap)));
+        }
     }
 
     @media (hover: hover) {
-        &:hover {
-            outline       : 3px dotted crimson;
-            outline-offset: 3px;
+        cursor: pointer;
+
+        &.onBoard:hover {
+            --shadow: 0 0 2vmin #000000a8;
         }
     }
 
@@ -37,11 +74,18 @@ tile {
         text-align    : center;
         text-transform: inherit;
         line-height   : 1.1rem;
+        font-size     : 20vmin;
     }
 
     @media screen and (max-width: 400px) {
         h2 {
             font-size: 1rem;
         }
+    }
+}
+
+@media only screen and (orientation: landscape) {
+    tile {
+        --size: calc(((85vmin - ((var(--height) - 1) * var(--gap)))) / var(--height));
     }
 }
