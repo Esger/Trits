@@ -13,7 +13,7 @@ export class Board {
         this._newTiles();
         console.log(this.deck);
         this.allCorrectCombinations = [];
-        this.testing = !window.location.href.includes('localhost');
+        this.testing = window.location.href.includes('localhost');
     }
 
     attached() {
