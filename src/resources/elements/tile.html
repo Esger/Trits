@@ -7,10 +7,13 @@
                 --mouth: ${tileObj.mouth};
                 --x: ${tileObj.x};
                 --y: ${tileObj.y};"
-          class="${tileObj.marked ? 'marked' : ''} ${tileObj.onBoard ? 'onBoard' : 'deck'} ${tileObj.toDeck ? 'toDeck' : ''}"
+          class="${tileObj.marked ? 'marked' : ''} 
+                ${tileObj.onBoard || tileObj.toDeck || tileObj.drawn ? 'face' : 'back'}
+                ${tileObj.onBoard ? 'onBoard' : 'deck'} 
+                ${tileObj.drawn ? 'drawn' : ''}"
           click.delegate="clicked()">
     <require from="./tile.css"></require>
 
-    <h2 class="${tileObj.onBoard || tileObj.toDeck ? 'hide' : ''}">?</h2>
+    <h2 class="${tileObj.onBoard || tileObj.toDeck || tileObj.drawn ? 'hide' : ''}">?</h2>
 
 </template>

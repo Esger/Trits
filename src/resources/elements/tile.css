@@ -15,7 +15,7 @@ tile {
     background-color: transparent;
     color           : var(--color);
     text-transform  : var(--textTransform);
-    border-radius   : var(--borderRadius, 3dvh);
+    border-radius   : var(--borderRadius, 2dvh);
     border          : solid;
     border-width    : var(--borderWidth, 0);
     aspect-ratio    : 1;
@@ -23,8 +23,7 @@ tile {
     box-shadow      : var(--shadow);
     transition      : transform 1s ease-in-out;
 
-    &.onBoard,
-    &.toDeck {
+    &.face {
         background-image     : url('assets/kinnen.webp'), url('assets/neuzen.webp'), url('assets/haren.webp'), url('assets/monden.webp');
         background-position  : var(--chin) center, var(--nose) center, var(--hair) center, var(--mouth) center;
         background-size      : cover, cover, cover, cover;
@@ -46,15 +45,23 @@ tile {
     }
 
     &.marked {
-        --shadow: 0 0 3vmin #00000088;
+        --shadow: 0 0 2vmin #000000a8;
         z-index : 1;
+    }
+
+    &.drawn {
+        transform: translate(calc(var(--size) + var(--gap)), 0);
+
+        @media only screen and (orientation: landscape) {
+            transform: translate(0, calc(var(--size) + var(--gap)));
+        }
     }
 
     @media (hover: hover) {
         cursor: pointer;
 
         &.onBoard:hover {
-            --shadow: 0 0 3vmin #00000088;
+            --shadow: 0 0 2vmin #000000a8;
         }
     }
 

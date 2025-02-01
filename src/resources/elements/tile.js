@@ -26,7 +26,7 @@ export class Tile {
     }
 
     clicked() {
-        if (this.tileObj.onBoard) {
+        if (this.tileObj.onBoard || this.tileObj.drawn) {
             this.tileObj.marked = !this.tileObj.marked;
             this._eventAggregator.publish('tile-clicked');
         } else {

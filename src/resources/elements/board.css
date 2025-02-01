@@ -55,6 +55,11 @@ board {
     }
 }
 
+input[type="range"] {
+    position: absolute;
+    bottom  : 0;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

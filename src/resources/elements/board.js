@@ -20,15 +20,30 @@ export class Board {
         this._hintSubscription = this._eventAggregator.subscribe('hint', _ => {
             const combination = this._findCorrectCombinations();
             if (combination) {
-                this.deck.forEach(tile => tile.marked = false);
+                this.deck.forEach(tile => {
+                    tile.marked = false;
+                    tile.drawn = false;
+                });
                 combination.forEach(tile => tile.marked = true);
                 this.score -= 2;
                 setTimeout(_ => combination.forEach(tile => tile.marked = false), 1500);
             } else {
                 const tile = this.deck.filter(tile => !tile.onBoard)[0];
                 this._highlightTiles([tile]);
+                this.score += 2;
             }
+            const randomIndex = this._getRandomIndex();
+            this.deck[randomIndex].drawn = true;
         });
+        this._toDeckSubscription = this._eventAggregator.subscribe('tile-to-deck-ready', _ => {
+            clearTimeout(this._toDeckTimeout);
+            this._toDeckTimeout = setTimeout(() => {
+                this._findCorrectCombinations();
+            }, 1000);
+        });
+        setTimeout(() => {
+            this._findCorrectCombinations();
+        }, 1000);
     }
 
     detached() {
@@ -47,12 +62,16 @@ export class Board {
         setTimeout(_ => tiles.forEach(tile => tile.marked = false), 1200);
     }
 
+    highLightTiles() {
+        this._highlightTiles(this.allCorrectCombinations[0]);
+    }
+
     _getRandomIndex() {
         let tile, index, found = false;
         while (!found) {
             index = Math.floor(Math.random() * this.deck.length);
             tile = this.deck[index];
-            if (!(tile.onBoard || tile.marked || tile.toBoard || tile.toDeck || tile.chosen)) {
+            if (!(tile.onBoard || tile.marked || tile.toBoard || tile.toDeck || tile.chosen || tile.drawn)) {
                 found === true;
                 tile.chosen = true;
                 return index;
@@ -113,26 +132,36 @@ export class Board {
     }
 
 
-    _renewTiles(tiles) {
+    _renewTiles(markedTiles) {
         const randomIndices = [];
-        tiles.forEach(_ => randomIndices.push(this._getRandomIndex()));
-        this.deck.forEach(tile => tile.chosen = false);
-        for (let i = 0; i < randomIndices.length; i++) {
-            const boardTile = tiles[i];
-            const randomTile = this.deck[randomIndices[i]];
-            const toBoard = (toBoard, toDeck) => {
-                toBoard.x = toDeck.x;
-                toBoard.y = toDeck.y;
-                toBoard.toBoard = true;
-            }
-            const toDeck = tile => {
-                tile.x = 0;
-                tile.y = 0;
-                tile.toDeck = true;
+        const move2Board = (tileToBoard, tileToDeck) => {
+            tileToBoard.x = tileToDeck.x;
+            tileToBoard.y = tileToDeck.y;
+            tileToBoard.toBoard = true;
+        }
+        const move2Deck = tile => {
+            tile.x = 0;
+            tile.y = 0;
+            tile.toDeck = true;
+            if (tile.drawn) {
+                tile.drawn = false;
+            } else {
                 tile.onBoard = false;
             }
-            toBoard(randomTile, boardTile);
-            toDeck(boardTile);
+        }
+        markedTiles.forEach(tile => {
+            randomIndices.push(tile.drawn ? -1 : this._getRandomIndex());
+        });
+        this.deck.forEach(tile => tile.chosen = false);
+        for (let i = 0; i < markedTiles.length; i++) {
+            const markedTile = markedTiles[i];
+            if (markedTile.drawn) {
+                move2Deck(markedTile);
+            } else {
+                const randomTile = this.deck[randomIndices[i]];
+                move2Board(randomTile, markedTile);
+                move2Deck(markedTile);
+            }
         }
     }
 
@@ -151,8 +180,8 @@ export class Board {
 
     _findCorrectCombinations() {
         this.allCorrectCombinations = [];
-        const onboardTiles = this.deck.filter(tile => tile.onBoard);
-        const combinations = this._getCombinations(onboardTiles, 3);
+        const visibleTiles = this.deck.filter(tile => tile.onBoard || tile.drawn);
+        const combinations = this._getCombinations(visibleTiles, 3);
         for (const combination of combinations) {
             if (this._isCorrect(combination)) {
                 this.allCorrectCombinations.push(combination);
