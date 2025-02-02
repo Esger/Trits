@@ -58,7 +58,7 @@ tile {
             filter: contrast(100);
 
             h2 {
-                filter: blur(5px);
+                filter: blur(.6vmin);
             }
 
             &::after {
@@ -103,14 +103,8 @@ tile {
         color         : inherit;
         text-align    : center;
         text-transform: inherit;
-        line-height   : 1.1rem;
-        font-size     : 20vmin;
-    }
-
-    @media screen and (max-width: 400px) {
-        h2 {
-            font-size: 1rem;
-        }
+        line-height   : 2rem;
+        font-size     : 18vmin;
     }
 }
 
