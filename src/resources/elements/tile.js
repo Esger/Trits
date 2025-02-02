@@ -30,7 +30,7 @@ export class Tile {
             this.tileObj.marked = !this.tileObj.marked;
             this._eventAggregator.publish('tile-clicked');
         } else {
-            this._eventAggregator.publish('hint');
+            this._eventAggregator.publish('draw');
         }
     }
 

@@ -10,7 +10,8 @@
           class="${tileObj.marked ? 'marked' : ''} 
                 ${tileObj.onBoard || tileObj.toDeck || tileObj.drawn ? 'face' : 'back'}
                 ${tileObj.onBoard ? 'onBoard' : 'deck'} 
-                ${tileObj.drawn ? 'drawn' : ''}"
+                ${tileObj.drawn ? 'drawn' : ''}
+                ${tileObj.deny ? 'deny' : ''}"
           click.delegate="clicked()">
     <require from="./tile.css"></require>
 

@@ -18,16 +18,15 @@ export class Board {
 
     attached() {
         this._clickSubscription = this._eventAggregator.subscribe('tile-clicked', _ => this._checkWin());
-        this._hintSubscription = this._eventAggregator.subscribe('hint', _ => {
+        this._hintSubscription = this._eventAggregator.subscribe('draw', _ => {
             const combination = this._findCorrectCombinations();
             if (combination) {
                 this.deck.forEach(tile => {
                     tile.marked = false;
                     tile.drawn = false;
                 });
-                combination.forEach(tile => tile.marked = true);
+                this.highLightTiles(combination);
                 this.score -= 2;
-                setTimeout(_ => combination.forEach(tile => tile.marked = false), 1500);
             } else {
                 const tile = this.deck.filter(tile => !tile.onBoard)[0];
                 this._highlightTiles([tile]);
@@ -54,17 +53,30 @@ export class Board {
         this._toDeckSubscription.dispose();
     }
 
-    currentCombinationChanged(index) {
-        this._highlightTiles(this.allCorrectCombinations[index]);
+    _denyTile(tile) {
+        tile.deny = true;
+        setTimeout(_ => {
+            tile.deny = false;
+            tile.marked = false;
+        }, 700);
+    }
+
+    _denyTiles(tiles) {
+        tiles.forEach(tile => this._denyTile(tile));
+    }
+
+    _highlightTile(tile) {
+        tile.marked = true;
+        setTimeout(_ => tile.marked = false, 2000);
     }
 
     _highlightTiles(tiles) {
-        tiles.forEach(tile => tile.marked = true);
-        setTimeout(_ => tiles.forEach(tile => tile.marked = false), 1200);
+        tiles.forEach(tile => this._highlightTile(tile));
     }
 
     highLightTiles() {
-        this._highlightTiles(this.allCorrectCombinations[0]);
+        this._lastCombinationIndex = this._lastCombinationIndex !== undefined ? (this._lastCombinationIndex + 1) % this.allCorrectCombinations.length : 0;
+        this._lastCombinationIndex !== undefined && this._highlightTiles(this.allCorrectCombinations[this._lastCombinationIndex]);
     }
 
     _getRandomIndex() {
@@ -174,7 +186,7 @@ export class Board {
                 this.score += result;
                 this._renewTiles(this.markedTiles);
             } else {
-                this.markedTiles.forEach(tile => tile.marked = false);
+                this._denyTiles(this.markedTiles);
             }
         }
     }

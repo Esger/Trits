@@ -11,12 +11,5 @@
         <span>${score || ''}</span>
     <span if.bind="testing" click.delegate="highLightTiles()"># ${allCorrectCombinations.length || '0'}</span>
     </span>
-    <input if.bind="testing"
-            type="range"
-            class="hide"
-            min="0"
-            max.bind="allCorrectCombinations.length - 1"
-            step="1"
-            value.bind="currentCombination"
-            change.delegate="currentCombinationChanged(currentCombination)"/>
+
 </template>
