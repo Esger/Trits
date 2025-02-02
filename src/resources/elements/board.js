@@ -18,7 +18,7 @@ export class Board {
 
     attached() {
         this._clickSubscription = this._eventAggregator.subscribe('tile-clicked', _ => this._checkWin());
-        this._hintSubscription = this._eventAggregator.subscribe('hint', _ => {
+        this._hintSubscription = this._eventAggregator.subscribe('draw', _ => {
             const combination = this._findCorrectCombinations();
             if (combination) {
                 this.deck.forEach(tile => {
