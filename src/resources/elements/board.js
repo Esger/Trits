@@ -53,6 +53,18 @@ export class Board {
         this._toDeckSubscription.dispose();
     }
 
+    _denyTile(tile) {
+        tile.deny = true;
+        setTimeout(_ => {
+            tile.deny = false;
+            tile.marked = false;
+        }, 700);
+    }
+
+    _denyTiles(tiles) {
+        tiles.forEach(tile => this._denyTile(tile));
+    }
+
     _highlightTile(tile) {
         tile.marked = true;
         setTimeout(_ => tile.marked = false, 2000);
@@ -174,7 +186,7 @@ export class Board {
                 this.score += result;
                 this._renewTiles(this.markedTiles);
             } else {
-                this.markedTiles.forEach(tile => tile.marked = false);
+                this._denyTiles(this.markedTiles);
             }
         }
     }

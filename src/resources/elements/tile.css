@@ -91,6 +91,10 @@ tile {
         }
     }
 
+    &.deny {
+        --shadow: 0 0 2vmin #dc143ca8;
+    }
+
     &.hidden {
         opacity: 0;
     }
