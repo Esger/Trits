@@ -44,6 +44,14 @@ tile {
         transform: translate(0, 0);
     }
 
+    @media (hover: hover) {
+        cursor: pointer;
+
+        &:hover {
+            --shadow: 0 0 1vmin #000000a8;
+        }
+    }
+
     &.marked {
         --shadow: 0 0 2vmin #000000a8;
         z-index : 1;
@@ -54,14 +62,6 @@ tile {
 
         @media only screen and (orientation: landscape) {
             transform: translate(0, calc(var(--size) + var(--gap)));
-        }
-    }
-
-    @media (hover: hover) {
-        cursor: pointer;
-
-        &.onBoard:hover {
-            --shadow: 0 0 2vmin #000000a8;
         }
     }
 
