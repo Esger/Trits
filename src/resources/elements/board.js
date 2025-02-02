@@ -64,7 +64,7 @@ export class Board {
 
     highLightTiles() {
         this._lastCombinationIndex = this._lastCombinationIndex !== undefined ? (this._lastCombinationIndex + 1) % this.allCorrectCombinations.length : 0;
-        this._highlightTiles(this.allCorrectCombinations[this._lastCombinationIndex]);
+        this._lastCombinationIndex !== undefined && this._highlightTiles(this.allCorrectCombinations[this._lastCombinationIndex]);
     }
 
     _getRandomIndex() {
