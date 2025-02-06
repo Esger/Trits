@@ -11,7 +11,6 @@ export class Board {
         this._eventAggregator = eventAggregator;
         this.score = 0;
         this._newTiles();
-        console.log(this.deck);
         this.allCorrectCombinations = [];
         this.testing = window.location.href.includes('localhost');
     }
