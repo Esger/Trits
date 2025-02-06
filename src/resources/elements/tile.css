@@ -23,6 +23,17 @@ tile {
     box-shadow      : var(--shadow);
     transition      : transform 1s ease-in-out;
 
+    &::after {
+        content       : '';
+        position      : absolute;
+        width         : 100%;
+        height        : 100%;
+        top           : 0;
+        left          : 0;
+        border-radius : var(--borderRadius, 2dvh);
+        mix-blend-mode: multiply;
+    }
+
     &.face {
         background-image     : url('assets/kinnen.webp'), url('assets/neuzen.webp'), url('assets/haren.webp'), url('assets/monden.webp');
         background-position  : var(--chin) center, var(--nose) center, var(--hair) center, var(--mouth) center;
@@ -42,6 +53,29 @@ tile {
 
     &.deck {
         transform: translate(0, 0);
+
+        &:not(.drawn) {
+            filter: contrast(100);
+
+            h2 {
+                filter: blur(.6vmin);
+            }
+
+            &::after {
+                background         : linear-gradient(90deg, #fff 0%, #7d7d7d 50%, #fff 100%);
+                background-size    : 5% 100%;
+                background-repeat  : repeat-x;
+                background-position: center;
+            }
+        }
+    }
+
+    @media (hover: hover) {
+        cursor: pointer;
+
+        &:hover {
+            --shadow: 0 0 1vmin #000000a8;
+        }
     }
 
     &.marked {
@@ -57,12 +91,8 @@ tile {
         }
     }
 
-    @media (hover: hover) {
-        cursor: pointer;
-
-        &.onBoard:hover {
-            --shadow: 0 0 2vmin #000000a8;
-        }
+    &.deny {
+        --shadow: 0 0 2vmin #dc143ca8;
     }
 
     &.hidden {
@@ -73,19 +103,19 @@ tile {
         color         : inherit;
         text-align    : center;
         text-transform: inherit;
-        line-height   : 1.1rem;
-        font-size     : 20vmin;
-    }
-
-    @media screen and (max-width: 400px) {
-        h2 {
-            font-size: 1rem;
-        }
+        line-height   : 0;
+        font-size     : 30vmin;
+        translate     : 0 1.5rem;
     }
 }
 
 @media only screen and (orientation: landscape) {
+
     tile {
         --size: calc(((85vmin - ((var(--height) - 1) * var(--gap)))) / var(--height));
+
+        h2 {
+            translate: 0 3.5rem;
+        }
     }
 }
