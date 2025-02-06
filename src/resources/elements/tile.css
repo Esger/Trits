@@ -58,12 +58,12 @@ tile {
             filter: contrast(100);
 
             h2 {
-                filter: blur(5px);
+                filter: blur(.6vmin);
             }
 
             &::after {
                 background         : linear-gradient(90deg, #fff 0%, #7d7d7d 50%, #fff 100%);
-                background-size    : 7% 100%;
+                background-size    : 5% 100%;
                 background-repeat  : repeat-x;
                 background-position: center;
             }
@@ -103,19 +103,19 @@ tile {
         color         : inherit;
         text-align    : center;
         text-transform: inherit;
-        line-height   : 1.1rem;
-        font-size     : 20vmin;
-    }
-
-    @media screen and (max-width: 400px) {
-        h2 {
-            font-size: 1rem;
-        }
+        line-height   : 0;
+        font-size     : 30vmin;
+        translate     : 0 1.5rem;
     }
 }
 
 @media only screen and (orientation: landscape) {
+
     tile {
         --size: calc(((85vmin - ((var(--height) - 1) * var(--gap)))) / var(--height));
+
+        h2 {
+            translate: 0 3.5rem;
+        }
     }
 }
