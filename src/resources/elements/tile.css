@@ -2,6 +2,89 @@
     text-transform: var(--textTransform);
 }
 
+board {
+    --chinImage          : url('assets/kinnen.webp');
+    --hairImage          : url('assets/haren.webp');
+    --noseImage          : url('assets/neuzen.webp');
+    --mouthImage         : url('assets/monden.webp');
+    --chinImageHighlight : url('assets/kinnen-groen.webp');
+    --hairImageHighlight : url('assets/haren-groen.webp');
+    --noseImageHighlight : url('assets/neuzen-groen.webp');
+    --mouthImageHighlight: url('assets/monden-groen.webp');
+
+    &:has(.face[style*='--hair: left'] .hair:hover) {
+        .face[style*='--hair: left'] {
+            --hairImage: var(--hairImageHighlight);
+        }
+    }
+
+    &:has(.face[style*='--hair: center'] .hair:hover) {
+        .face[style*='--hair: center'] {
+            --hairImage: var(--hairImageHighlight);
+        }
+    }
+
+    &:has(.face[style*='--hair: right'] .hair:hover) {
+        .face[style*='--hair: right'] {
+            --hairImage: var(--hairImageHighlight);
+        }
+    }
+
+    &:has(.face[style*='--nose: left'] .nose:hover) {
+        .face[style*='--nose: left'] {
+            --noseImage: var(--noseImageHighlight);
+        }
+    }
+
+    &:has(.face[style*='--nose: center'] .nose:hover) {
+        .face[style*='--nose: center'] {
+            --noseImage: var(--noseImageHighlight);
+        }
+    }
+
+    &:has(.face[style*='--nose: right'] .nose:hover) {
+        .face[style*='--nose: right'] {
+            --noseImage: var(--noseImageHighlight);
+        }
+    }
+
+    &:has(.face[style*='--mouth: left'] .mouth:hover) {
+        .face[style*='--mouth: left'] {
+            --mouthImage: var(--mouthImageHighlight);
+        }
+    }
+
+    &:has(.face[style*='--mouth: center'] .mouth:hover) {
+        .face[style*='--mouth: center'] {
+            --mouthImage: var(--mouthImageHighlight);
+        }
+    }
+
+    &:has(.face[style*='--mouth: right'] .mouth:hover) {
+        .face[style*='--mouth: right'] {
+            --mouthImage: var(--mouthImageHighlight);
+        }
+    }
+
+    &:has(.face[style*='--chin: left'] .chin:hover) {
+        .face[style*='--chin: left'] {
+            --chinImage: var(--chinImageHighlight);
+        }
+    }
+
+    &:has(.face[style*='--chin: center'] .chin:hover) {
+        .face[style*='--chin: center'] {
+            --chinImage: var(--chinImageHighlight);
+        }
+    }
+
+    &:has(.face[style*='--chin: right'] .chin:hover) {
+        .face[style*='--chin: right'] {
+            --chinImage: var(--chinImageHighlight);
+        }
+    }
+}
+
 tile {
     position        : absolute;
     --size          : calc(((85vmin - ((var(--width) - 1) * var(--gap)))) / var(--width));
@@ -35,7 +118,7 @@ tile {
     }
 
     &.face {
-        background-image     : url('assets/kinnen.webp'), url('assets/neuzen.webp'), url('assets/haren.webp'), url('assets/monden.webp');
+        background-image     : var(--chinImage), var(--noseImage), var(--hairImage), var(--mouthImage);
         background-position  : var(--chin) center, var(--nose) center, var(--hair) center, var(--mouth) center;
         background-size      : cover, cover, cover, cover;
         background-blend-mode: multiply;
@@ -97,6 +180,39 @@ tile {
 
     &.hidden {
         opacity: 0;
+    }
+
+    .hoverAreas {
+        position      : absolute;
+        width         : 100%;
+        height        : 100%;
+        top           : 0;
+        left          : 0;
+        display       : flex;
+        flex-direction: column;
+        align-items   : center;
+        z-index       : 10;
+
+        >div {
+            width     : 75%;
+            /* outline: 1px dotted green; */
+
+            &.hair {
+                flex: 0 0 25%;
+            }
+
+            &.nose {
+                flex: 0 0 45%;
+            }
+
+            &.mouth {
+                flex: 0 0 15%;
+            }
+
+            &.chin {
+                flex: 0 0 15%;
+            }
+        }
     }
 
     h2 {
