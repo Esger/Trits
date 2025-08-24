@@ -12,76 +12,28 @@ board {
     --noseImageHighlight : url('assets/neuzen-groen.webp');
     --mouthImageHighlight: url('assets/monden-groen.webp');
 
-    &:has(.face[style*='--hair: left'] .hair:hover) {
-        .face[style*='--hair: left'] {
-            --hairImage: var(--hairImageHighlight);
-        }
+    &:has(.face[style*='--hair: left'] .hair:hover) .face[style*='--hair: left'],
+    &:has(.face[style*='--hair: center'] .hair:hover) .face[style*='--hair: center'],
+    &:has(.face[style*='--hair: right'] .hair:hover) .face[style*='--hair: right'] {
+        --hairImage: var(--hairImageHighlight);
     }
 
-    &:has(.face[style*='--hair: center'] .hair:hover) {
-        .face[style*='--hair: center'] {
-            --hairImage: var(--hairImageHighlight);
-        }
+    &:has(.face[style*='--nose: left'] .nose:hover) .face[style*='--nose: left'],
+    &:has(.face[style*='--nose: center'] .nose:hover) .face[style*='--nose: center'],
+    &:has(.face[style*='--nose: right'] .nose:hover) .face[style*='--nose: right'] {
+        --noseImage: var(--noseImageHighlight);
     }
 
-    &:has(.face[style*='--hair: right'] .hair:hover) {
-        .face[style*='--hair: right'] {
-            --hairImage: var(--hairImageHighlight);
-        }
+    &:has(.face[style*='--mouth: left'] .mouth:hover) .face[style*='--mouth: left'],
+    &:has(.face[style*='--mouth: center'] .mouth:hover) .face[style*='--mouth: center'],
+    &:has(.face[style*='--mouth: right'] .mouth:hover) .face[style*='--mouth: right'] {
+        --mouthImage: var(--mouthImageHighlight);
     }
 
-    &:has(.face[style*='--nose: left'] .nose:hover) {
-        .face[style*='--nose: left'] {
-            --noseImage: var(--noseImageHighlight);
-        }
-    }
-
-    &:has(.face[style*='--nose: center'] .nose:hover) {
-        .face[style*='--nose: center'] {
-            --noseImage: var(--noseImageHighlight);
-        }
-    }
-
-    &:has(.face[style*='--nose: right'] .nose:hover) {
-        .face[style*='--nose: right'] {
-            --noseImage: var(--noseImageHighlight);
-        }
-    }
-
-    &:has(.face[style*='--mouth: left'] .mouth:hover) {
-        .face[style*='--mouth: left'] {
-            --mouthImage: var(--mouthImageHighlight);
-        }
-    }
-
-    &:has(.face[style*='--mouth: center'] .mouth:hover) {
-        .face[style*='--mouth: center'] {
-            --mouthImage: var(--mouthImageHighlight);
-        }
-    }
-
-    &:has(.face[style*='--mouth: right'] .mouth:hover) {
-        .face[style*='--mouth: right'] {
-            --mouthImage: var(--mouthImageHighlight);
-        }
-    }
-
-    &:has(.face[style*='--chin: left'] .chin:hover) {
-        .face[style*='--chin: left'] {
-            --chinImage: var(--chinImageHighlight);
-        }
-    }
-
-    &:has(.face[style*='--chin: center'] .chin:hover) {
-        .face[style*='--chin: center'] {
-            --chinImage: var(--chinImageHighlight);
-        }
-    }
-
-    &:has(.face[style*='--chin: right'] .chin:hover) {
-        .face[style*='--chin: right'] {
-            --chinImage: var(--chinImageHighlight);
-        }
+    &:has(.face[style*='--chin: left'] .chin:hover) .face[style*='--chin: left'],
+    &:has(.face[style*='--chin: center'] .chin:hover) .face[style*='--chin: center'],
+    &:has(.face[style*='--chin: right'] .chin:hover) .face[style*='--chin: right'] {
+        --chinImage: var(--chinImageHighlight);
     }
 }
 
