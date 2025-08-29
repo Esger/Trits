@@ -38,9 +38,11 @@ board {
 }
 
 tile {
-    position        : absolute;
     --size          : calc(((85vmin - ((var(--width) - 1) * var(--gap)))) / var(--width));
     --top           : 0;
+    --pupilOffsetX  : 38.6%;
+    --pupilOffsetY  : 38.6%;
+    position        : absolute;
     width           : var(--size);
     left            : 0;
     top             : var(--top);
@@ -57,6 +59,29 @@ tile {
     --shadow        : none;
     box-shadow      : var(--shadow);
     transition      : transform 1s ease-in-out;
+
+    &::before,
+    &.face::after {
+        content         : '';
+        position        : absolute;
+        width           : 2%;
+        aspect-ratio    : 1;
+        top             : var(--pupilOffsetY);
+        left            : var(--pupilOffsetX);
+        border-radius   : 1in;
+        background-color: #fff;
+        z-index         : 1;
+
+        @media screen and (max-width: 600px) {
+            width: 2px;
+        }
+    }
+
+    &.face::after {
+        --pupilOffsetX: 59.6%;
+        height        : auto;
+        mix-blend-mode: revert;
+    }
 
     &::after {
         content       : '';
