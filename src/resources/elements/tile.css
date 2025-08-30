@@ -38,29 +38,30 @@ board {
 }
 
 tile {
-    --size          : calc(((85vmin - ((var(--width) - 1) * var(--gap)))) / var(--width));
-    --top           : 0;
-    --pupilOffsetX  : 0%;
-    --pupilOffsetY  : 0%;
-    --pupilX        : 38.6%;
-    --pupilY        : 38.6%;
-    position        : absolute;
-    width           : var(--size);
-    left            : 0;
-    top             : var(--top);
-    display         : flex;
-    justify-content : center;
-    align-items     : center;
-    background-color: transparent;
-    color           : var(--color);
-    text-transform  : var(--textTransform);
-    border-radius   : var(--borderRadius, 2dvh);
-    border          : solid;
-    border-width    : var(--borderWidth, 0);
-    aspect-ratio    : 1;
-    --shadow        : none;
-    box-shadow      : var(--shadow);
-    transition      : transform 1s ease-in-out;
+    --size             : calc(((85vmin - ((var(--width) - 1) * var(--gap)))) / var(--width));
+    --top              : 0;
+    --pupilOffsetX     : 0%;
+    --pupilOffsetY     : 0%;
+    --pupilOffsetXRight: 0%;
+    --pupilX           : 38.6%;
+    --pupilY           : 38.6%;
+    position           : absolute;
+    width              : var(--size);
+    left               : 0;
+    top                : var(--top);
+    display            : flex;
+    justify-content    : center;
+    align-items        : center;
+    background-color   : transparent;
+    color              : var(--color);
+    text-transform     : var(--textTransform);
+    border-radius      : var(--borderRadius, 2dvh);
+    border             : solid;
+    border-width       : var(--borderWidth, 0);
+    aspect-ratio       : 1;
+    --shadow           : none;
+    box-shadow         : var(--shadow);
+    transition         : transform 1s ease-in-out;
 
     &::before,
     &.face::after {
@@ -80,7 +81,7 @@ tile {
     }
 
     &.face::after {
-        --pupilX      : calc(59.6% + var(--pupilOffsetX));
+        --pupilX      : calc(59.6% + var(--pupilOffsetXRight));
         height        : auto;
         mix-blend-mode: revert;
     }

@@ -27,13 +27,16 @@ export class Tile {
             if (!this.tileObj.onBoard) return;
             const centerX = this._$element.offset().left + this._$element.width() / 2;
             const centerY = this._$element.offset().top + this._$element.height() / 2;
-            const mouseDx = (centerX - mousePos.x) / centerX // -1 to 1
-            const mouseDy = (centerY - mousePos.y) / centerY
-            const relativeDx = -1 * mouseDx + 'px';
-            const relativeDy = -1 * mouseDy + 'px';
+            const distanceX = centerX - mousePos.x;
+            const distanceY = centerY - mousePos.y;
+            const maxDistance = Math.max(this._$element.width(), this._$element.height()) / 2;
+            const mouseDx = distanceX / maxDistance; // -1 to 1
+            const mouseDy = distanceY / maxDistance;
+            const relativeDx = -.2 * mouseDx + 'px';
+            const relativeDy = -.2 * mouseDy + 'px';
             this._element.style.setProperty('--pupilOffsetX', relativeDx);
             this._element.style.setProperty('--pupilOffsetY', relativeDy);
-        })
+        });
         this._element.addEventListener('transitionend', _ => this.deckOrBoard());
     }
 
