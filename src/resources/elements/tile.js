@@ -7,6 +7,7 @@ export class Tile {
 
     constructor(element, eventAggregator) {
         this._element = element;
+        this._$element = $(element);
         this._eventAggregator = eventAggregator;
     }
 
@@ -22,6 +23,17 @@ export class Tile {
             this.tileObj.marked = false;
             this.tileObj.toBoard = false;
         });
+        this._pupilsOffsetSubscription = this._eventAggregator.subscribe('mouse-position', mousePos => {
+            if (!this.tileObj.onBoard) return;
+            const centerX = this._$element.offset().left + this._$element.width() / 2;
+            const centerY = this._$element.offset().top + this._$element.height() / 2;
+            const mouseDx = (centerX - mousePos.x) / centerX // -1 to 1
+            const mouseDy = (centerY - mousePos.y) / centerY
+            const relativeDx = -1 * mouseDx + 'px';
+            const relativeDy = -1 * mouseDy + 'px';
+            this._element.style.setProperty('--pupilOffsetX', relativeDx);
+            this._element.style.setProperty('--pupilOffsetY', relativeDy);
+        })
         this._element.addEventListener('transitionend', _ => this.deckOrBoard());
     }
 
@@ -49,6 +61,7 @@ export class Tile {
     detached() {
         this._toDeckSubscription.dispose();
         this._toBoardSubscription.dispose();
+        this._pupilsOffsetSubscription.dispose();
         this._element.removeEventListener('transitionend', this.deckOrBoard);
     }
 
