@@ -40,6 +40,8 @@ export class Board {
                 this._findCorrectCombinations();
             }, 1000);
         });
+        this._interactionTracker = document.body.addEventListener('mousemove', this._adjustPupils);
+
         setTimeout(() => {
             this._findCorrectCombinations();
         }, 1000);
@@ -50,6 +52,15 @@ export class Board {
         this._hintSubscription.dispose();
         this._readySubscription.dispose();
         this._toDeckSubscription.dispose();
+        document.body.removeEventListener('mousemove', this._adjustPupils);
+    }
+
+    _adjustPupils = (event) => {
+        if (this.positionThrottle) return;
+        this.positionThrottle = setTimeout(() => {
+            this._eventAggregator.publish('mouse-position', { x: event.x, y: event.y });
+            this.positionThrottle = null;
+        }, 100);
     }
 
     _denyTile(tile) {
