@@ -10,8 +10,8 @@
     "dependencies": {
         "aurelia-animator-css": "^1.0.4",
         "aurelia-bootstrapper": "^2.3.3",
-        "aurelia-animator-css": "^1.0.4",
-        "aurelia-portal-attribute": "^1.4.0"
+        "aurelia-portal-attribute": "^1.4.0",
+        "jquery": "^3.7.1"
     },
     "devDependencies": {
         "@babel/core": "^7.14.2",
